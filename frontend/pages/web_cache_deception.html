@@ -51,6 +51,59 @@
   <main role="main" class="container">
     <h1>Web Cache Deception</h1>
     <div class="jumbotron">
+      <hr>
+      <h3>What?</h3>
+      <p>In 2018, <a href="https://ieeexplore.ieee.org/document/8613948">a study by Guo et al.</a> showed that about 74%
+        of the 1000 most popular websites by Alexa ranking are using a Content Delivery Network (CDN).
+        These CDNs are a proxy in between the client (such as web browsers) that are geographically close to the user and
+        provide various benefits. On such benefit is to reduce latency and network traffic by caching static files.
+      </p>
+      <p>
+        In 2017, a vulnerability was discovered by Omer Gil as explained on his
+        <a href="https://omergil.blogspot.com/2017/02/web-cache-deception-attack.html">Blog</a> called <i>Web Cache Deception</i>.
+        Web Cache Deception allows an attacker to steal highly confidential information of a victim, whenever the CDN
+        has cache rules that are too aggressive.
+      </p>
+      <hr>
+      <h3>How?</h3>
+      <hr>
+      <p>First, the attacker needs to find a vulnerable website by trying to modify the URL. There are two conditions
+        that must hold for this URL, in order to perform an attack:</p>
+        <ul>
+          <li>The intermediate proxy with caching must think the URL is a static file and will cache the response from the web server.</li>
+          <li>The URL must be interpreted as a regular URL by the web server, and thus, return personal information on the webpage.</li>
+        </ul>
+      <p>
+        Let's say the attacker is looking for performing this attack on the following fictional URL: <i>somebank.com/profile</i>.
+        The attacker will modify the URL to the following: <i>somebank.com/profile/img.png</i> and notices it shows the initial
+        profile webpage. While opening an incognito browser, the user sees the <b>exact</b> same webpage <u>without being logged in!</u>
+      </p>
+      <p>
+        Hence, the attacker sends a slightly different URL (to bypass cache) to the victim. The victim opens the URL, but
+        sees a regular webpage. The user has no reason for suspicion, because there is nothing odd about the webpage
+        (besides the slight URL modification).
+      </p>
+      <p>
+        The attacker checks back on the same URL that the attacker sent to the victim, to see if it has been opened, and thus,
+        cached yet. If so, the attacker now sees the same HTML-content as the victim when the victim is logged in!
+      </p>
+      <h3>Consequences</h3>
+      <hr>
+      <p>
+        There are two major consequences.
+      </p>
+      <p>
+          First and most obviously, every information that the web server shows to the user is now in the hands of the attacker.
+          It depends on the website and webpage, but examples include username, mail address, home address, telephone number,
+          bank details, order history, chat messages, credit card information and anything else you can think of.
+      </p><p>
+          There is also a second consequence that perhaps occurs less frequently, but could be even more dangerous. In case
+          the web server also embeds any sort of tokens in the HTML DOM, these can be stolen by the attacker as well.
+          The first example would be when the page includes a form with a token linked to the user, allowing the attacker to submit
+          a form on the user's behalf. A second example could be that the webpage embeds cookies / session tokens in the page.
+          Then, an attacker can simply steal the session token, and depending on the security checks of the website, the attacker
+          could be logged in on the user's account.
+      </p>
     </div>
   </main>
 
@@ -65,7 +118,6 @@
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="../reset.js"></script>
-  <script src="./insecure_direct_object_references.js"></script>
 </body>
 
 </html>
