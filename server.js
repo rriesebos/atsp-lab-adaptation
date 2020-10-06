@@ -86,7 +86,7 @@ app.post('/api/signin', async (req, res) => {
   }  
   catch (err)
   {
-    console.log("failed");
+    console.log("failed: " + err);
       res.json({ 
           status: false, 
           error: err.message 
@@ -176,8 +176,6 @@ app.get('/api/users/:id', async (req, res) => {
 // Transfer money from user_id X to user_id Y. Usage:
 // http://localhost:3000/transfer_money?to=1&amount=100&reference=<REFERENCE>
 app.get('/api/transfer_money/', async (req, res) => {
-
-
   try 
   {
       let from_user_id;

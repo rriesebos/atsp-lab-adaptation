@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../index.css">
+
+    <title>User Portal</title>
+</head>
+<body>
+
+<!-- Menu bar  to copied over files -->
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark MenuBar">
+    <a class=" navbar-brand" href="../portal-wcd/login.html">Portal</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="../portal-wcd/login.html">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="../portal-wcd/account.html">Account Details<span
+                        class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <div id="reset-success" class="alert alert-success hidden" role="alert">Successful reset</div>
+        <div id="reset-failure" class="alert alert-danger hidden" role="alert">Failed to reset</div>
+        <button class="btn btn-primary" style="float: left" onclick="reset()">Reset</button>
+        <button class="btn btn-primary ml-2" style="float: left" onclick="logout()">Log Out</button>
+    </div>
+
+</nav>
+
+<main role="main" class="container">
+    <div class="jumbotron">
+        <h1><b>Welcome</b> to your User Portal!</h1>
+        <p style="margin-top:30px;" class="lead">
+            On this webpage, you can view your private information. Please be careful with sharing this information,
+            because sharing this information can be abused by hackers. God, we wouldn't want that to happen now, would we!?
+        </p>
+    </div>
+
+    <div class="jumbotron">
+        <h2>Account Information</h2>
+        <p>
+            Dear user, below is an overview of all your account details stored on our servers!
+        </p>
+        <ul id="account-info"></ul>
+    </div>
+
+    <div class="jumbotron">
+        <h2>Transaction Overview</h2>
+        Besides keeping track of your balance, our great company also tracks every transaction made! Below, you see
+        an overview of all your historic transactions.
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Transaction ID</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Reference</th>
+            </tr>
+            </thead>
+            <tbody id='transaction-info'>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="jumbotron">
+        <h2>Cookie Information</h2>
+        <p>
+            Unfortunately, we could not afford to place an "do you accept cookies"-policy on our website.
+            Nevertheless, we are still using cookies though! In the meanwhile, you can look at the overview below
+            to see which cookies we are using for transparency!
+        </p>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Value</th>
+            </tr>
+            </thead>
+            <tbody id='cookie-info'>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<script
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+<script src="../reset.js"></script>
+<script src="./account.js"></script>
+<script src="./common.js"></script>
+</body>
+</html>
