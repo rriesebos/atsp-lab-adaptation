@@ -60,12 +60,12 @@ async function getTransactionInformation(session) {
     })
 }
 
-window.onload = function() {
+$( document ).ready(function() {
     session = checkAuthentication();
     getAccountInformation(session);
     getTransactionInformation(session);
     populateCookieTable("cookie-info");
-}
+});
 
 function populateTransactionTable(tableId, transactions)
 {

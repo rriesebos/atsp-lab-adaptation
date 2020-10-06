@@ -36,10 +36,10 @@ async function checkAuthentication() {
 
     if(response.authenticated)
     {
-        window.location.href = "account.html";
+        window.location.href = "dashboard.html";
     }
 }
 
-window.onload = function() {
+$( document ).ready(function() {
     checkAuthentication();
-}
+});
