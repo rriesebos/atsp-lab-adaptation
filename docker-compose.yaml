@@ -25,6 +25,7 @@ services:
       - 80:80
     networks:
       - api_nw
+
   evil-front-end: 
     build: ./evil-frontend
     ports:
