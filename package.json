@@ -9,7 +9,7 @@
     "lint": "xo",
     "format": "xo --fix",
     "start": "node ./bin/start.js",
-    "dev": "nodemon ./bin/start.js",
+    "dev": "nodemon --legacy-watch ./bin/start.js",
     "migrate": "node ./bin/migrate.js",
     "migrate:create": "migrate create --migrations-dir='./src/migrations'"
   },
