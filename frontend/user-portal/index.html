@@ -15,19 +15,13 @@
 
 <!-- Menu bar  to copied over files -->
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark MenuBar">
-    <a class=" navbar-brand" href="../portal-wcd/login.html">Portal</a>
+    <a class=" navbar-brand" href="#">Portal</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link active" href="../portal-wcd/login.html">Login<span
-                        class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../portal-wcd/account.html">Account Details</a>
-            </li>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto" id="menuitems">
+            <!-- Menu items are added in common.js -->
         </ul>
         <div id="reset-success" class="alert alert-success hidden" role="alert">Successful reset</div>
         <div id="reset-failure" class="alert alert-danger hidden" role="alert">Failed to reset</div>
@@ -42,25 +36,29 @@
         <p style="margin-top:30px;" class="lead">
             This is a demo website, where you can log in to view your user details.
         </p>
-        <hr>
-        <h2>Please log in below to continue.</h2>
-        <div class="alert alert-danger" role="alert" id="signin-failure" style="visibility:hidden;">
-            A simple primary alert—check it out!
-        </div>
-        <form id="login-form">
-            <div class="form-group">
-                <label for="id">Id</label>
-                <input type="text" class="form-control" id="id" aria-describedby="emailHelp">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password">
-            </div>
-            <button class="btn btn-primary" onclick="signin()" type="button">Log In</button>
-        </form>
     </div>
-
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 jumbotron">
+            <h2>Please log in below to continue.</h2>
+            <div class="alert alert-danger" role="alert" id="signin-failure" style="visibility:hidden;">
+                A simple primary alert—check it out!
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="id">Id</label>
+                    <input type="text" class="form-control" id="id" aria-describedby="emailHelp">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password">
+                </div>
+                <button class="btn btn-primary" onclick="signin()" type="button">Log In</button>
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
 
 </main>
 
@@ -72,7 +70,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
 <script src="../reset.js"></script>
-<script src="./login.js"></script>
+<script src="index.js"></script>
 <script src="./common.js"></script>
 </body>
 </html>

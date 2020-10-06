@@ -25,15 +25,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8d704ae-69c0-40ea-aec6-3cd30af82bb5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/portal-wcd/account.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/portal-wcd/account.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/portal-wcd/common.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/portal-wcd/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/portal-wcd/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/csrf.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/csrf.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/web_cache_deception.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/web_cache_deception.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/portal-wcd/account.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/portal-wcd/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/account.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/portal-wcd/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/portal-wcd/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/portal-wcd/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +67,7 @@
       <option name="presentableId" value="Default" />
       <updated>1601974218280</updated>
       <workItem from="1601974219916" duration="7432000" />
-      <workItem from="1601992114521" duration="9945000" />
+      <workItem from="1601992114521" duration="12443000" />
     </task>
     <servers />
   </component>
@@ -89,9 +87,9 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="666" y="119" width="587" height="801" key="find.popup" timestamp="1602002507792">
+    <state x="666" y="119" width="587" height="801" key="find.popup" timestamp="1602004528404">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="666" y="119" width="587" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602002507792" />
+    <state x="666" y="119" width="587" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602004528404" />
   </component>
 </project>
