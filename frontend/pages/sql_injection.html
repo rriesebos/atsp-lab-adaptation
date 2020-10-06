@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto&display=swap" rel="stylesheet">     
+    <link rel="stylesheet" href="../index.css">
+
+    <title>Web-Vulnerability Platform</title>
+  </head>
+  <body>
+
+    <!-- Menu bar  to copied over files -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark MenuBar">
+        <a class=" navbar-brand" href="../index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="../pages/sql_injection.html">SQL Injection <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../pages/xss.html">Cross-Site Scripting</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../pages/csrf.html">Cross-Site Request Forgery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../pages/insecure_direct_object_references.html">Insecure Direct Object References</a>
+            </li>
+          </ul>
+          <div id="reset-success" class="alert alert-success hidden" role="alert">Successful reset</div>
+          <div id="reset-failure" class="alert alert-danger hidden" role="alert">Failed to reset</div>
+          <button class="btn btn-primary" style="float: left" onclick="reset()">Reset</a>
+        </div>
+      </nav>
+   
+      <main role="main" class="container">
+        <h1>SQL Injection</h1>
+        <div class="jumbotron">
+          <hr><h3>What</h3>
+          <p>
+          SQL injection is a type of code injection attack, allowing arbitrary code execution
+          on insecure databases. More specifically, it allows the attackers to modify or gain
+          access to data in the unprotected database. The most common case is through web page
+          inputs. Due to the unfiltered use of the input field, a user with malicious intent 
+          can execute arbitrary SQL statements with all its consequences.
+        </p>
+
+        <hr><h3>How</h3>
+        <p>
+          The vulnerable website requests from the database, based on some user-specific 
+          information. This provided data can either originate from the application itself 
+          or through some kind of input field. This information is then naively evaluated. 
+          In other words, the input is directly evaluated without input validation. 
+          Part of the SQL statement is preconstructed in the backend. This prefabricated 
+          SQL statement is then concatenated with the unvalidated user input. An example 
+          of this is shown in the following codeblock.
+        </p>
+
+<pre class="prettyprint">
+SELECT * FROM users 
+  WHERE user_id = ${req.params.id};
+</pre>
+
+        <p> 
+          Here the <i>id</i> that is supplied by the request is naively pasted into the query.
+          Performing no validation on this allows a malicious user to exploit this. <br/><br/> 
+          
+          An attacker can either use provided input fields such as the one shown below, or he 
+          can look into the network debugging tools of his browser in order to find out what 
+          kinds of requests are being sent. If the hacker can find a vulnerable request, he can
+          then send his own modified versions of the request to the server.
+        </p>
+        <input type="text" id="sampleRequestId" placeholder="user ID goes here"/>
+        <button class="btn btn-md btn-primary" onclick="generateSampleRequest()">Submit</button>
+
+<pre class="prettyprint" id="requestfield">
+// The generated request
+www.insecurebanking.com/users/ID
+</pre>
+
+        <hr><h3>Consequences</h3>
+        <p>
+          The attacker can access, modify and delete the tables of a database. This means
+          an attacker can retrieve data from users he should not be able to view. He can 
+          change values to be more in his favour (think of changing balance of accounts and 
+          removing debts). Deletion of tables is a more chaotic and destructive problem that 
+          will have consequences for many people. If you want to stay more hidden, he could 
+          decide to change the rules of a bank's database such that he receives one cent for 
+          each transaction that is completed. 
+        </p>
+        
+        <hr><h3>Prevention</h3>
+        <p>
+          One can do numerous things to prevent hackers from performing SQL injections. Some 
+          steps can be taken on the front-end side, but seeing as a client can always
+          change client-side code, this is never 100% foolproof. <br><br>
+
+          One of the easiest steps to prevent SQL code-injections is to use SQL parameters.
+          These replace the unsafe parts of the query with a parameter and pass the values
+          of these parameters at exectution time, rather than pasting the values into the query.
+        </p>
+<pre class="prettyprint">
+// Instead of this
+SELECT * FROM users 
+  WHERE user_id = ${req.params.id};
+
+// We get this
+id = ${req.params.id};
+query = "SELECT * FROM users WHERE user_id = @0";
+db.Execute(query, id);
+</pre>
+        
+        <hr><h3>Examples</h3>
+        <p>
+          For these example we will be using the example of a simple (insecure) banking
+          application in which users have an account, balance and can transfer money to 
+          each other.
+        </p>
+        
+        <h4> Gaining access to other user's information</h4><hr
+        ><p> 
+          Let us say that you are logged in as user with id 3 and want to view your user 
+          information. The request will look something like shown below. Now a hacker can
+          look at his network traffic and find this request that gets the user information of
+          single user. This kind of request is in itself another type of web vulnerability, which
+          is explained over <a href="insecure_direct_object_references.html">here</a>. In order to ease 
+          the understanding of the user, we employ this structure throughout these examples. In a real 
+          application this would probably be different, but the examples still hold.
+        </p>
+<pre class="prettyprint" id="examplefield">
+// For this example we send the request to localhost
+<input class="request-input" id="exampleOneRequest" type="text" value="http://localhost/api/users/3"/>
+<span id="exampleOneResult"></span>
+</pre>
+
+        <div class="btn-row">
+          <button class="btn btn-primary exm-btn" onclick="exampleOne()">Run</button>
+          <button id="reset-one-btn" class="reset-btn nocode btn btn-secondary" onclick="resetExampleOne()">Reset</button>
+        </div>
+        <p>
+          If this is the request that would normally be sent and everybody uses this
+          without then no harm would be done, but as soon as a hacker gets his hands 
+          on this request, you can start to extend this request with valid SQL to be
+          injected. Remember the shape of the query in the backend:   
+        </p>
+<pre class="prettyprint">
+SELECT * FROM users 
+  WHERE user_id = ${req.params.id};
+</pre>
+
+        <p>
+          We select the user where the user_id of the request matches with that one 
+          in the database. So if we change this filter to always be true, we might 
+          get information about other users. Try adjusting the above request into 
+          one that produces the following query and see what happens:
+        </p>
+<pre class="prettyprint">
+SELECT * FROM users 
+  WHERE user_id = 3 OR 1=1;
+
+("http://localhost/api/users/3 OR 1=1")
+</pre>
+        <p>
+          This will take check for each user whether the user_id is equal to 3 OR
+          whether 1 is equal to 1, which will always result in true.
+        </p>
+
+
+        <h4> Modifying information</h4><hr>
+        <p>
+          If the query is of the right type, a hacker can also fire multiple queries in order
+          to change data in other parts of the database. A hacker can update the balance of his
+          account using the query shown below. This query can be executed by ending the original 
+          query and firing another query. The way to do this is by closing the original query
+          and starting a new one. The request is shown in the below text field. Try the run button 
+          in order to see the result.
+        </p>
+<pre class="prettyprint" id="examplefield">
+// Query to update account balance
+UPDATE users SET balance = 3000 WHERE user_id = 3;
+
+// Get this before and after the update attack
+<input class="request-input" id="getUserRequest" type="text" value="http://localhost/api/users/3"/>
+<span id="getUserResultBefore"></span>
+
+// The update attack itself
+<textarea class="nocode request-input" id="exampleTwoRequest">
+http://localhost/api/users/3;
+UPDATE users
+  SET balance = 3000
+  WHERE user_id = 3;
+</textarea>
+
+// Results afterwards will go here
+<span id="getUserResultAfter"></span>
+</pre>  
+
+        <div class="btn-row">
+          <button class="btn btn-primary exm-btn" onclick="exampleTwo()">Run</button>
+          <button class="reset-btn btn btn-secondary" onclick="resetExampleTwo()">Reset</button>
+        </div>
+        
+        <h4>Information Deletion</h4><hr>
+        <p>
+          In this final example we show the more destructive form of an SQL injection. Besides gaining
+          and adjusting information a hacker can also go ahead and delete entire parts of the database.
+          This works in the same way as the previous example, code and examples are shown in the block 
+          below. (You can reset the database using the button in the top-right)
+        </p>  
+<pre class="prettyprint" id="examplefield">
+// Query to destruct the user table
+DROP TABLE users;
+
+// The destructive attack
+<input class="nocode request-input" id="exampleThreeRequest" type="text" value="http://localhost/api/users/3; DROP TABLE users;"/>
+
+// This code from earlier will run after the attack
+<input class="request-input" id="getDroppedRequest" type="text" value="http://localhost/api/users/3"/>
+<span id="getDroppedResult"></span>
+</pre>          
+        <div class="btn-row">
+          <button class="btn btn-primary exm-btn" onclick="exampleThree()">Run</button>
+          <button class="reset-btn btn btn-secondary" onclick="resetExampleThree()">Reset</button>
+        </div>
+        <hr><h3>References</h3>
+        <p>
+          Below you can find some interesting links to other websites that also explain various 
+          aspects of SQL injections:
+        </p>
+        <ul class="references">
+          <li class="reference">
+            <a target="_blank" href="https://en.wikipedia.org/wiki/SQL_injection">Wikipedia article</a>
+          </li>
+          <li class="reference">
+            <a target="_blank" href="https://www.w3schools.com/sql/sql_injection.asp">w3schools on SQL injection</a>
+          </li>
+        </ul>
+      </div>
+    </main>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="../reset.js"></script>
+    <script src="sql_injection.js"></script>
+  </body>
+</html>

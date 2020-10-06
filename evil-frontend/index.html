@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+
+    <title>Evil Web-Vulnerability Platform</title>
+  </head>
+  <body>
+
+    <!-- Menu bar  to copied over files -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark MenuBar">
+        <a class=" navbar-brand" href="index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost/pages/csrf.html">Back to the non-evil website</a>
+            </li>
+          </ul>
+        </div>
+      </nav>                        
+    </nav>
+    </nav>
+    </nav>
+   
+      <main role="main" class="container">
+        <div class="jumbotron">
+          <h1><b>Welcome to the evil website!</b></h1>
+          <p style="margin-top:30px;" class="lead">
+            We will attempt to steal your money in this website.
+          </p>
+          <h3>How do we steal your money?</h3><hr>
+          <p>
+            In order to steal the money from your bank account, we need to send a request to the actual banking application. 
+            Whenever a HTML page is loaded, the html is parsed and rendered on the screen. A html tag which is not that secure is the IMG tag. 
+            Normally, the IMG tag is used to tell the browser to render an image from a specific source. In order to render the image, the browser retrieves the image by sending a request to the source.
+            However, this image source does not have to be a source of an image, but can also be an url of something else. The browser does not know the difference.
+          
+            This evil website contains one of these image tags. The source of the image contains is the following URL:
+
+            <pre class="prettyprint">
+                http://insecurebanking.com/api/transfer_money?to=5&amount=100&reference=CSRF Attack from evil website!
+            </pre>
+          </p>
+          <p>
+
+            Whenever this page is loaded, this request is created. If the user is authenticated, money is actually transferred to the account of the attacker (account ID 5 in this case).
+            
+            <br />
+            <br />
+            The IMG tag which creates the request: <img src="http://localhost/api/transfer_money?to=5&amount=100&reference=CSRF Attack from evil website!"></img>
+            <br />
+            <br />
+            If you were authenticated in the non-evil website, you can now go back to the non-evil website. You will find a malicious transaction added to the transaction list.
+            <a class="nav-link" href="http://localhost/pages/csrf.html">Back to the non-evil website</a>
+          </p>
+      </main>
+      
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

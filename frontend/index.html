@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+
+    <title>Web-Vulnerability Platform</title>
+  </head>
+  <body>
+
+    <!-- Menu bar  to copied over files -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark MenuBar">
+        <a class=" navbar-brand" href="index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="pages/sql_injection.html">SQL Injection</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages/xss.html">Cross-Site Scripting</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages/csrf.html">Cross-Site Request Forgery</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages/insecure_direct_object_references.html">Insecure Direct Object References</a>
+            </li>
+          </ul>
+          <div id="reset-success" class="alert alert-success hidden" role="alert">Successful reset</div>
+          <div id="reset-failure" class="alert alert-danger hidden" role="alert">Failed to reset</div>
+          <form id="form-signout">
+            <button onclick="signout(event)" class="btn btn-primary" type="submit">Sign out</button>
+          </form>
+          <button class="btn btn-primary" style="float: left" onclick="reset()">Reset</a>
+        </div>
+        
+      </nav>
+   
+      <main role="main" class="container">
+        <div class="jumbotron">
+          <h1><b>Welcome</b></h1>
+          <p style="margin-top:30px;" class="lead">
+            This site serves as an example of current web vulnerabilities and their effects. 
+            Students and enthusiasts alike can use this setup in order to learn 
+            about these vulnerabilities, how they work and what can be done to prevent them.
+            A github repository with the code for this project can be found by clicking the button below. 
+          </p>
+          <div class="btn-row"><a id="repo-btn" class="btn btn-lg btn-ternary" target="_blank" href="https://www.github.com/nielsmeima/atsp-project" role="button">Github Repository</a></div>
+          
+
+
+          <h3>Welcome to Insecure Banking</h3><hr>
+          <p>
+            Throughout the examples of this website we use the setting of an imaginary banking service 
+            called <i>insecurebanking.com</i>. This service provides a set of basic (insecure) operations 
+            that you can deal with and try to hack. The service consists of logging in and logging out capabilities, viewing your information and transactions, as well 
+            creating new transactions. These functionalities are covered in due time and spread out over the several pages. 
+            For each of the different web vulnerabilities covered there is a menu button on the top left.
+            <br><br>
+            <b>NB</b>: some of the operations in the examples are stateful and change the information stored in the database.
+            At any point in time the database can be reset to its initial state with the <i>reset</i> button in the top-right corner. 
+
+          </p>
+          <div style="width: 100%; height: 30px;"></div>
+
+          <div style="height: 50px"></div>
+          <h3>References</h3><hr>
+          <p>
+            Below you can find some interesting links to other websites that also explain various 
+            aspects of web-attacks:
+          </p>
+          <ul class="references">
+            <li class="reference">
+              <a target="_blank" href="https://www.guru99.com/web-security-vulnerabilities.html">10 Most Common Web Security Vulnerabilities</a>
+            </li>
+          </ul>
+        </div>
+
+
+      </main>
+      
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>    
+    <script src="reset.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

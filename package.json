@@ -1,0 +1,47 @@
+{
+  "name": "Lab02",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Lab02 web-vulnerability platform",
+  "main": "config.js",
+  "scripts": {
+    "test": "xo",
+    "lint": "xo",
+    "format": "xo --fix",
+    "start": "node ./bin/start.js",
+    "dev": "nodemon ./bin/start.js",
+    "migrate": "node ./bin/migrate.js",
+    "migrate:create": "migrate create --migrations-dir='./src/migrations'"
+  },
+  "keywords": [
+    "express",
+    "postgres"
+  ],
+  "author": "MG",
+  "license": "MIT",
+  "dependencies": {
+    "@types/jsonwebtoken": "^8.5.0",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "client-sessions": "^0.8.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "helmet": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "migrate": "^1.7.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.3.3",
+    "sql-template-strings": "^2.2.2",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "xo": "^0.33.1"
+  },
+  "xo": {
+    "prettier": true,
+    "space": true
+  }
+}

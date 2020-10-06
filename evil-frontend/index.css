@@ -1,0 +1,111 @@
+body {
+    float: center;
+    background-color: #520000;
+}
+
+#repo-btn {
+    float: right;
+    margin-right: 5%;
+}
+
+.btn-ternary {
+    background-color: rgb(246, 255, 255);
+    color: rgb(59, 59, 59);
+}
+
+.box {
+    width: 46%;
+    margin-left: 2%;
+    margin-right: 2%;
+    padding: 10px;
+    float: left;
+    background-color: rgb(192, 136, 136);
+}
+
+.box-head {
+    /* margin: 0 auto 0 auto; */
+    text-align: center;
+}
+
+main {
+    margin-top: 100px;
+}
+
+p {
+    margin-left: 50px;
+    margin-right: 30px;
+}
+
+pre,.prettyprint {
+    padding: 30px !important;
+    margin: 0 auto 0 auto;
+    width: 80%;
+    background-color: whitesmoke !important;
+    border: 0px solid #b5b9bc !important;
+}
+
+
+h1 {
+    text-align: center;
+    font-size: 70px;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto 20 auto;
+}
+
+h3 {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+h4 {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+#sampleRequestId {
+    margin: 5px;
+    margin-left: 75px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.exm-btn {
+    margin: 0px 10% 0px auto;
+    width: 100px;
+    float: right;
+}
+
+.reset-btn {
+    width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+    float: right;
+}
+
+.btn-row {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#reset-one-btn {
+    margin-left: 10px;
+}
+
+.request-input {
+    width: 90%;
+    padding: 10px;
+}
+
+#exampleTwoRequest {
+    height: 130px;
+}
+
+.inline-btn {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

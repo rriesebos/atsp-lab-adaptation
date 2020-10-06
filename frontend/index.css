@@ -1,0 +1,178 @@
+body {
+    float: center;
+}
+
+#reset-success, #reset-failure {
+   margin-left: auto;
+   margin-right: 30px;
+   margin-top: auto; 
+   margin-bottom: auto; 
+   width: 150px;
+   padding: 5px !important;
+   text-align: center;
+   height: 30% !important;
+}
+
+#repo-btn {
+    float: right;
+    margin-right: 5%;
+}
+
+.btn-ternary {
+    background-color: rgb(246, 255, 255);
+    color: rgb(59, 59, 59);
+}
+
+.box {
+    width: 40%;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 2%;
+    float: left;
+    background-color: whitesmoke;
+}
+
+.box-head {
+    width: 100%;
+    margin: 0 !important;
+    margin-bottom: 30px !important;
+    text-align: center;
+}
+.box_csrf {
+    width: 55%;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 2%;
+    float: left;
+    background-color: whitesmoke;
+}
+
+#userBalance {
+    /* margin: auto auto; */
+    margin-left: 5%;
+    /* margin-right: 5%; */
+}
+
+
+#form-signup, #form-signin {
+    width: 80%;
+    margin: 0 auto 0 auto;
+}
+
+#signin-failure, #signin-success,
+#signup-failure, #signup-success {
+    margin: 0px !important;
+    margin-top: 15px !important;
+}
+
+.btn-submit {
+    margin: 10px auto 0 auto !important;
+    width: 60%;
+}
+
+main {
+    margin-top: 100px;
+}
+
+p {
+    margin-left: 50px;
+    margin-right: 30px;
+}
+
+pre,.prettyprint {
+    padding: 30px !important;
+    margin: 10px auto 10px auto;
+    width: 80%;
+    background-color: whitesmoke !important;
+    border: 0px solid #b5b9bc !important;
+}
+
+
+h1 {
+    text-align: center;
+    font-size: 70px;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto 20 auto;
+}
+
+h3 {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+h4 {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+#sampleRequestId {
+    margin: 5px;
+    margin-left: 75px;
+}
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+.exm-btn {
+    margin: 0px 10% 0px auto;
+    width: 100px;
+    float: right;
+}
+
+.reset-btn {
+    width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+    float: right;
+}
+
+.btn-row, .hzt-box {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#reset-one-btn {
+    margin-left: 10px;
+}
+
+.request-input {
+    width: 100%;
+    padding: 10px;
+}
+
+#exampleTwoRequest {
+    height: 130px;
+}
+
+.inline-btn {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.references {
+    margin: 0 5% 0 5%;
+}
+
+.reference {
+    margin: 10px 0 10px 0;
+}
+
+.table {
+    width: 90%;
+    margin: 0 auto 0 auto;
+}
+
+form {
+    margin-left: 50px;
+    margin-right: 30px;
+}
+
+.inline-alert {
+    margin-left: 50px;
+    margin-right: 30px;
+}

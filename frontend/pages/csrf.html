@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../index.css">
+
+    <title>Web-Vulnerability Platform</title>
+  </head>
+  <body onload="checkAuthentication()">
+
+    <!-- Menu bar  to copied over files -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark MenuBar">
+        <a class=" navbar-brand" href="../index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../pages/sql_injection.html">SQL Injection</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../pages/xss.html">Cross-Site Scripting</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="../pages/csrf.html">Cross-Site Request Forgery<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../pages/insecure_direct_object_references.html">Insecure Direct Object References</a>
+            </li>
+          </ul>
+          <div id="reset-success" class="alert alert-success hidden" role="alert">Successful reset</div>
+          <div id="reset-failure" class="alert alert-danger hidden" role="alert">Failed to reset</div>
+          <button class="btn btn-primary" style="float: left" onclick="reset()">Reset</button>
+        </div>
+      </nav>
+   
+      <main role="main" class="container">
+        <h1>Cross-Site Request Forgery</h1>
+        <div class="jumbotron">
+          <!-- <hr><h3>Authentication</h3> -->
+          
+          <hr><h3>What</h3>
+          <p>
+            Cross-Site Request Forgery (CSRF) is a type of web exploit in which the attacker makes the user submit a (web) request they did not intend.
+            More specifically, the end user unknowingly executes unwanted actions on an application in which the user is authenticated. 
+            The malicious request does not originate from the vulnerable application itself, but rather
+            from a different source. This source does not need to be related to the vulnerable application itself. The attacker can achieve this in 
+            various ways such as specially crafted image tags, exploits in URLs and hidden form elements.  
+          </p>
+          <hr><h3>How</h3>
+          <p>
+            An absolute user-side requirement for this type of attack, is to be authenticated in the target web application. The other requirement
+            is for the user to somehow activate the attack. This can be in the form of visiting a malicious URL, opening an email or clicking an 
+            unknown link. The vulnerable web application needs to allow malicious behaviour solely through URLs. Either with query parameters, request bodies or simply a different subdomain.
+          </p>
+          <p>
+            The request needs to be embedded in the attack, because the attack is user-side, this also means that attacker has no access to any results
+            of the performed attack. The user fires the request, so the user also receives the response. This means the attacker has no way of knowing
+            whether the attack was successful or not, apart from observing any side-effects (such as an increased bank balance).   
+          </p>
+          <p>
+            The main problem of this type of attack is that the browser cannot distinguish between intended or forged requests. This 
+            places the burden of verifying the request on the web application, which in this case is left vulnerable to such an attack. 
+          </p>      
+          <hr><h3>Consequences</h3>
+          <p>
+            Everything the authenticated user can normally do on the vulnerable application, can now be performed by the attacker as if they were 
+            the user. This means the severity of consequences depends on the sensitivity of the application.
+          </p>
+          <hr><h3>Prevention</h3>
+          <p>
+            There are three user-side steps one can undertake in order to avoid (some of) these kinds of attacks:
+          </p>
+          <ul class="references">
+            <li>Log off from applications once you are done using them</li>
+            <li>Leave CORS disabled in your browser settings</li>
+            <li>Do not click or visit things that you do not trust or are unfamiliar with</li>
+          </ul>
+          <p>
+            <br>
+            As the browser will never be able to distinguish between request intentions, the server side is tasked with mitigating the risks of CSRF-attacks.
+            The most important one is token-based access. Ideally creating unique tokens for each session which only lasts for the session duration. This means
+            that as soon as the user leaves the application the token expires, as well as after a certain amount of time the token will expire. If the user is still
+            on the website after the token expires this can simply be refreshed in order to prevent user experience degradation.
+          </p>
+          <hr><h3>Examples</h3>
+
+          <p>
+              Once again, we are customers at <i>insecurebanking.com</i>. This bank of course supports transactions from and to other users. But before being able to create a transaction, the user should be authenticated.
+              You can authenticate as one of the users of insecurebanking.com. Their credentials can be found in the table on the right.
+              After you have authenticated, a unique token is stored in the browser. This token is stored in a cookie, and is attached to each request made to the domain of <i>insecurebanking.com</i>. 
+              The backend of the web application then uses this token to make sure that you are the person using the web application. 
+            </p>
+            <p>
+                <div class="hzt-box">
+                  <div class="box" id="loginForm">
+                    <div class="alert alert-primary">
+                      <h4 class="box-head">Logging In</h4>
+                      <form id="form-signin">
+                        <input name="id" type="id" id="signinId" class="form-control" placeholder="ID" required="" autofocus="">
+                        <input name="password" type="password" id="signinPassword" class="form-control" placeholder="Password" required="">
+                        <div style="width: 100%; height: 35px;"></div>
+                        <button onclick="signin(event)" class="btn btn-md btn-primary btn-block btn-submit inline-btn" type="submit">Sign in</button>
+                      </form>
+                    </div>
+                  </div>
+                  
+                  <div class="box" id="authBox" display="none">
+                    <div class="alert alert-success">
+                      <h4 class="box-head">Authenticated</h4>
+                      <p id="authText">You are currently authenticated as</p>
+                      <button onclick="signout(event)" class="btn btn-md btn-primary btn-block btn-submit inline-btn" type="submit">Sign out</button>
+                    </div>
+                  </div>
+                  <div class="box" id="creds">
+                      <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">User ID</th>
+                              <th scope="col">Name</th>
+                              <th scope="col">Password</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1</td>
+                              <td>Edser</td>
+                              <td>Mantsje</td>
+                            </tr>
+                              <td>2</td>
+                              <td>Mark</td>
+                              <td>Spazzy</td>
+                            </tr>
+                            </tr>
+                              <td>3</td>
+                              <td>Sjors</td>
+                              <td>sjmdev</td>
+                            </tr>
+                            </tr>
+                              <td>4</td>
+                              <td>Niels</td>
+                              <td>nielsmeima</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                  </div>
+                </div>
+            </p>
+  
+            <div id="reqAuthWarning" class="alert alert-danger">
+              <h6>Please authenticate using the form before continuing.</h6>
+            </div>
+            <div id="requiresAuthentication">
+
+            <p>
+              In the following overview, you can see the current balance, and the transactions of the user currently authenticated:
+            </p>
+
+            <div class="alert alert-info">
+                <p>
+                  <h4 id="overviewText">Please authenticate</h4>
+
+                  <div id="userBalance">
+                    <b>Current balance:</b> 
+                  </div>
+                </p>
+                <p>
+                <div class="hzt-box">
+                    <div class="box_csrf">
+                      <h4>Transactions</h4>
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">Transaction ID</th>
+                            <th scope="col">From</th>
+                            <th scope="col">To</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Reference</th>
+                            </tr>
+                          </thead>
+                          <tbody id='rowsId'>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </p>
+                  <p>
+                      <button onclick="checkAuthentication()" class="btn btn-md btn-primary" type="submit">Refresh</button>
+                  </p>
+
+                </div>
+
+            <p>
+              In order to make a transaction, a form is provided where the users can fill in the details of the transaction:
+            </p>
+          <div class="alert alert-info">
+            <h4>Creating a transaction</h4>
+            <form class="inline-form">
+              <div class="form-group">
+                <label for="toId">To ID</label>
+                <input type="number" class="form-control" id="toId" placeholder="Enter User ID">
+              </div>
+              <div class="form-group">
+                <label for="amountId">Amount</label>
+                <input type="number" class="form-control" id="amountId" placeholder="Enter amount">
+              </div>
+              <div class="form-group">
+                <label for="referenceId">Reference</label>
+                <input type="text" class="form-control" id="referenceId" placeholder="Enter reference">
+              </div>
+            </form>
+            <p>
+            <button class="btn btn-primary inline-btn" onclick="makeTransaction()">Make transaction</button>
+            <div id="transaction-success" class="alert alert-success hidden inline-alert" role="alert">Transaction succeeded</div>
+            <div id="transaction-failure" class="alert alert-danger hidden inline-alert" role="alert">Transaction failed</div>
+            </p>
+          </div>
+          <p>
+              After the user has filled in the form, and clicked the "Make transaction" button, the web application will create a request to the backend of the application. 
+              After creating the request, you can click the "Refresh" button on the overview to see the newly created transaction added to the list.
+              
+              The values in the form are used as URL parameters in a GET request. This request to the backend will look like this:
+          </p>
+          <pre class="prettyprint">
+          // An example of the request used to transfer money
+          <input class="request-input" type="text" value="http://insecurebanking.com/api/transfer_money?to=<USER_ID>&amount=<AMOUNT>"/>
+          </pre> 
+
+          <p>
+            <h3>The evil website</h3>
+            The user is now authenticated, and able to send requests to transfer money to the backend. As explained before, a CSRF attack tries to trick the user sending a request to the backend with different parameters.
+            In the situation of the banking website, the attacker would try to transfer money to its own account. 
+
+            One way in which the attacker is able to achieve this, is to send you a link to a webpage which fires the request. For this demonstration we created one such evil website. 
+
+            Please go to the evil website, the details on the attack will be explained there.
+            <br />
+            <br />
+            <a href="http://localhost:81">Link to the evil website</a>
+            <!-- As explained earlier, the userCSRF exploits backends like these -->
+          </p>
+
+        </div>
+
+
+          <!-- <pre class="prettyprint">
+          // The same example with other parameters
+          <input class="request-input" type="text" value="http://insecurebanking.com/api/transfer_money?to=3&amount=1337"/>
+          </pre>  -->
+
+          <hr><h3>References</h3>
+          <p>
+            Below you can find some interesting links to other websites that also explain various 
+            aspects of CSRF attacks:
+          </p>
+          <ul class="references">
+            <li class="reference">
+              <a target="_blank" href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)">owasp.org</a>
+            </li>
+            <li class="reference">
+              <a target="_blank" href="https://www.cgisecurity.com/csrf-faq.html">cgisecurity.com</a>
+            </li>
+            <li class="reference">
+              <a target="_blank" href="http://projects.webappsec.org/w/page/13246919/Cross%20Site%20Request%20Forgery">webappsec.org</a>
+            </li>
+          </ul>
+        </div>
+      </main>
+    
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+      <script src="../reset.js"></script>
+      <script src="csrf.js"></script>
+  </body>
+</html>
