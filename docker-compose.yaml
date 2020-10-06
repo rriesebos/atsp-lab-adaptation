@@ -25,6 +25,8 @@ services:
       - 80:80
     networks:
       - api_nw
+    volumes:
+      - ./frontend/:/var/www
 
   evil-front-end: 
     build: ./evil-frontend
