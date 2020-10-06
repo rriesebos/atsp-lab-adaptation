@@ -27,11 +27,11 @@
     <list default="true" id="b8d704ae-69c0-40ea-aec6-3cd30af82bb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/portal-wcd/account.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/portal-wcd/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/account.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/portal-wcd/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/portal-wcd/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/portal-wcd/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/csrf.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/csrf.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/insecure_direct_object_references.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/insecure_direct_object_references.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/sql_injection.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/sql_injection.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/web_cache_deception.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/web_cache_deception.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/xss.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/xss.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +67,7 @@
       <option name="presentableId" value="Default" />
       <updated>1601974218280</updated>
       <workItem from="1601974219916" duration="7432000" />
-      <workItem from="1601992114521" duration="12443000" />
+      <workItem from="1601992114521" duration="12649000" />
     </task>
     <servers />
   </component>
