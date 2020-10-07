@@ -18,6 +18,20 @@ services:
     networks:
       - api_nw
       - api_db
+
+  cdn:
+    build: ./cdn
+    depends_on:
+      - app
+    ports:
+      - "3001:3001"
+    command: npm run dev
+    volumes:
+      - ./cdn/:/app/
+      - /app/node_modules
+    networks:
+      - api_nw
+      - api_db
   
   front-end:
     build: ./frontend
