@@ -41,3 +41,7 @@
 #req-auth-warning h6 {
     margin: 0;
 }
+
+.steal-cookie-container {
+    display: none;
+}

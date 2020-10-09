@@ -24,7 +24,6 @@ async function checkAuthentication() {
         authText.innerHTML = `You are currently authenticated as user with ID ${response.user_id}.`;
         requiresAuthentication.style.display = "inherit";
         reqAuthWarning.style.display = "none";
-        stealCookieContainer.style.display = "none";
 
         populateCookieTable("cookie-info");
     } else {
@@ -32,7 +31,6 @@ async function checkAuthentication() {
         authBox.style.display = "none";
         requiresAuthentication.style.display = "none";
         reqAuthWarning.style.display = "inherit";
-        stealCookieContainer.style.display = "inherit";
     }
 }
 
@@ -61,6 +59,7 @@ async function signout(e) {
     await checkAuthentication();
 
     reqAuthWarning.style.display = "none";
+    stealCookieContainer.style.display = "inherit";
 }
 
 function signin(e) {
