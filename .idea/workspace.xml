@@ -25,13 +25,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8d704ae-69c0-40ea-aec6-3cd30af82bb5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/user-portal/profile.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/csrf.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/csrf.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/insecure_direct_object_references.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/insecure_direct_object_references.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/sql_injection.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/sql_injection.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/web_cache_deception.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/web_cache_deception.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/xss.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/xss.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdn/cdn.js" beforeDir="false" afterPath="$PROJECT_DIR$/cdn/cdn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdn/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/cdn/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/nginx.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/user-portal/account.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/user-portal/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/user-portal/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,14 +51,49 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/pages" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/user-portal" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.2.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\soelm\Desktop\Repositories\ATSP-Lab-Adaptation\frontend\user-portal" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\soelm\Desktop\Repositories\ATSP-Lab-Adaptation\frontend\user-portal" />
+      <recent name="C:\Users\soelm\Desktop\Repositories\ATSP-Lab-Adaptation\cdn" />
       <recent name="C:\Users\soelm\Desktop\Repositories\ATSP-Lab-Adaptation\frontend\pages" />
     </key>
+  </component>
+  <component name="RunManager" selected="Docker.docker-compose.yaml.cdn: Compose Deployment">
+    <configuration name="docker-compose.yaml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yaml.cdn: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="cdn" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.yaml: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yaml.cdn: Compose Deployment" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -67,7 +104,10 @@
       <option name="presentableId" value="Default" />
       <updated>1601974218280</updated>
       <workItem from="1601974219916" duration="7432000" />
-      <workItem from="1601992114521" duration="12649000" />
+      <workItem from="1601992114521" duration="12694000" />
+      <workItem from="1602051510204" duration="13183000" />
+      <workItem from="1602230020724" duration="4277000" />
+      <workItem from="1602234902477" duration="9121000" />
     </task>
     <servers />
   </component>
@@ -87,9 +127,18 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="666" y="119" width="587" height="801" key="find.popup" timestamp="1602004528404">
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1602057481733">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="666" y="119" width="587" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602004528404" />
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602057481733" />
+    <state x="2586" y="119" width="587" height="801" key="find.popup" timestamp="1602255972132">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="666" y="119" width="587" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602234357398" />
+    <state x="2586" y="119" width="587" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602255972132" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1602233260760">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602233260760" />
   </component>
 </project>
