@@ -24,6 +24,7 @@ async function checkAuthentication() {
         authText.innerHTML = `You are currently authenticated as user with ID ${response.user_id}.`;
         requiresAuthentication.style.display = "inherit";
         reqAuthWarning.style.display = "none";
+        stealCookieContainer.style.display = "none";
 
         populateCookieTable("cookie-info");
     } else {
