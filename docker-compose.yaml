@@ -2,6 +2,7 @@
 version: "3"
 services:
   app:
+    container_name: app
     build: .
     depends_on:
       - postgres
@@ -20,6 +21,7 @@ services:
       - api_db
   
   front-end:
+    container_name: front-end
     build: ./frontend
     ports:
       - 80:80
@@ -29,11 +31,13 @@ services:
       - ./frontend/:/var/www
 
   evil-front-end: 
+    container_name: evil-front-end
     build: ./evil-frontend
     ports:
       - 81:80
       
   postgres:
+    container_name: postgres
     image: postgres:10.4
     ports:
       - "35432:5432"
