@@ -1,0 +1,28 @@
+{
+  "name": "Lab02-cdn",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Lab02 web-vulnerability platform CDN",
+  "main": "cdn.js",
+  "scripts": {
+    "test": "xo",
+    "lint": "xo",
+    "format": "xo --fix",
+    "start": "node /app/cdn.js",
+    "dev": "nodemon --legacy-watch /app/cdn.js"
+  },
+  "author": "MG",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "xo": "^0.33.1"
+  },
+  "xo": {
+    "prettier": true,
+    "space": true
+  }
+}

@@ -1,4 +1,4 @@
-const backend = 'http://localhost/api/'
+const backend = '/api/'
 
 const fetchSettings = {
     method: 'POST',
@@ -50,15 +50,62 @@ function getMenuItem(pageName, pageUrl) {
     return li;
 }
 
+function createMenuButtons(isLoggedIn) {
+    menuRight = document.getElementById("menuButtons");
+
+    // Add back to lab button
+    a = document.createElement("a");
+    a.className = "btn btn-primary ml-2";
+    a.href = "http://localhost/";
+    a.innerText = "Back to Lab";
+    menuRight.appendChild(a);
+
+    // Add Reset Successful label
+    div = document.createElement("div");
+    div.id = "reset-success";
+    div.className = "alert alert-success hidden";
+    div.setAttribute("role", "alert");
+    div.innerText = "Successful reset";
+    menuRight.appendChild(div);
+
+    // Add Reset Failure label
+    div = document.createElement("div");
+    div.id = "reset-failure";
+    div.className = "alert alert-danger hidden";
+    div.setAttribute("role", "alert");
+    div.innerText = "Failed to reset";
+    menuRight.appendChild(div);
+
+    // Add Reset button
+    button = document.createElement("button");
+    button.className = "btn btn-primary ml-2";
+    button.setAttribute("onclick", "reset();");
+    button.innerText = "Reset";
+    menuRight.appendChild(button);
+
+    // Add logout button
+    if(isLoggedIn) {
+        button = document.createElement("button");
+        button.className = "btn btn-danger ml-2";
+        button.setAttribute("onclick", "logout();");
+        button.innerText = "Log Out";
+        menuRight.appendChild(button);
+    }
+}
+
 function createMenu() {
     isLoggedIn().then(function(isLoggedIn) {
         menuLeft = document.getElementById("menuitems");
 
+        // Create regular pages below
         if(!isLoggedIn) {
             menuLeft.appendChild(getMenuItem("Login", "./index.html"));
         } else {
             menuLeft.appendChild(getMenuItem("Dashboard", "./dashboard.html"));
         }
+
+        // Create control flow buttons below
+        createMenuButtons(isLoggedIn);
 
     });
 }
