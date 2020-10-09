@@ -17,7 +17,7 @@ var cache = {};
 
 // PART 1: This function is used to turn the general caching mechanism for the CDN on/off
 function isCachingEnabled() {
-    return true;
+    return false;
 }
 
 // PART 2: This function should return true/false, based on whether some URL requires caching or not
