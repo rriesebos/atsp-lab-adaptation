@@ -75,7 +75,7 @@ app.post('/api/signin', async (req, res) => {
       let id = req.body.id
       let password = req.body.password
       const result = await db.query(`SELECT * FROM users WHERE user_id = ${id} AND password = '${password}' LIMIT 1`);
-      if (result.rows.length == 0) throw Error('Failed to login');
+      if (result.rows.length == 0) throw Error('Invalid credentials.');
       let token = jwt.sign({id: id}, 'banana', {expiresIn: '1h'});
       console.log("Received token: " + token);
       res.json({ 
