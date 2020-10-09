@@ -1,4 +1,4 @@
-const backend = 'http://localhost/api/'
+const backend = '/api/'
 
 const fetchSettings = {
     method: 'POST',

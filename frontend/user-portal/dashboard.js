@@ -1,9 +1,9 @@
-async function checkAuthentication() {
+async function checkAuthentication(afterURL) {
     const settings = {
         method: 'GET',
     };
 
-    let url = `/api/is_authenticated`
+    let url = `/api/is_authenticated` + afterURL;
     let response = await fetch(url, settings);
     response = await response.json();
 
@@ -14,15 +14,13 @@ async function checkAuthentication() {
     return response;
 }
 
-async function getAccountInformation(session) {
+async function getAccountInformation(session, afterURL) {
     const settings = {
         method: 'GET',
     };
 
     session.then(async function(session) {
-        console.log(session);
-
-        let url = `/api/users/` + session.user_id;
+        let url = `/api/my/user` + afterURL;
         let response = await fetch(url, settings);
         response = await response.json();
 
@@ -43,7 +41,7 @@ async function getAccountInformation(session) {
     })
 }
 
-async function getTransactionInformation(session) {
+async function getTransactionInformation(session, afterURL) {
     const settings = {
         method: 'GET',
     };
@@ -51,7 +49,7 @@ async function getTransactionInformation(session) {
     session.then(async function(session) {
         console.log(session);
 
-        let url = `/api/transactions/` + session.user_id;
+        let url = `/api/my/transactions` + afterURL;
         let response = await fetch(url, settings);
         response = await response.json();
 
@@ -61,9 +59,12 @@ async function getTransactionInformation(session) {
 }
 
 $( document ).ready(function() {
-    session = checkAuthentication();
-    getAccountInformation(session);
-    getTransactionInformation(session);
+    // Simulate WCD on this page
+    afterURL = document.URL.split("dashboard.html")[1];
+
+    session = checkAuthentication(afterURL);
+    getAccountInformation(session, afterURL);
+    getTransactionInformation(session, afterURL);
     populateCookieTable("cookie-info");
 });
 
