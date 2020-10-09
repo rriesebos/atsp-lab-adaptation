@@ -1,3 +1,9 @@
+loginForm = document.getElementById('login-form');
+authBox = document.getElementById('auth-box');
+authText = document.getElementById('auth-text');
+requiresAuthentication = document.getElementById('requires-authentication');
+reqAuthWarning = document.getElementById('req-auth-warning');
+
 stealCookieForm = document.getElementById('form-steal-cookie');
 cookieNameInput = document.getElementById('cookie-name');
 cookieValueInput = document.getElementById('cookie-value');
@@ -10,12 +16,6 @@ async function checkAuthentication() {
     let url = `/api/is_authenticated`
     let response = await fetch(url, settings);
     response = await response.json();
-
-    loginForm = document.getElementById('login-form');
-    authBox = document.getElementById('auth-box');
-    authText = document.getElementById('auth-text');
-    requiresAuthentication = document.getElementById('requires-authentication');
-    reqAuthWarning = document.getElementById('req-auth-warning');
 
     if (response.authenticated) {
         loginForm.style.display = "none";
@@ -51,18 +51,20 @@ const fetchSettings = {
 
 function signout(e) {
     e.preventDefault();
+    
     console.log("Invalidating token");
     document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
+
     checkAuthentication();
 }
 
 function signin(e) {
     e.preventDefault();
 
-    form = document.getElementById('form-signin');
+    signInForm = document.getElementById('form-signin');
     failureMessage = document.getElementById("signin-failure")
 
-    data = getFormDataAsObject(form);
+    data = getFormDataAsObject(signInForm);
     if (!data.id || !data.password) {
         failureMessage.innerHTML = "Please fill in all fields."
         return;
@@ -79,8 +81,10 @@ function signin(e) {
                 const date = new Date();
                 date.setTime(`${date.getTime()}${30 * 24 * 60 * 60 * 1000}`);
                 document.cookie = `token=${body['token']}; expiryDate=${date.toUTCString()}; path=/`;
+
                 checkAuthentication();
-                form.reset();
+
+                signInForm.reset();
             } else {
                 throw new Error(body['error']);
             }
@@ -119,10 +123,12 @@ function populateCookieTable(tableId) {
 var getCookies = function() {
     var pairs = document.cookie.split(";");
     var cookies = {};
+
     for (var i = 0; i < pairs.length; i++) {
         var pair = pairs[i].split("=");
         cookies[(pair[0] + '').trim()] = unescape(pair.slice(1).join('='));
     }
+    
     return cookies;
 }
 
