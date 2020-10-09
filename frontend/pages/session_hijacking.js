@@ -4,6 +4,7 @@ authText = document.getElementById('auth-text');
 requiresAuthentication = document.getElementById('requires-authentication');
 reqAuthWarning = document.getElementById('req-auth-warning');
 
+stealCookieContainer = document.querySelector('.steal-cookie-container');
 stealCookieForm = document.getElementById('form-steal-cookie');
 cookieNameInput = document.getElementById('cookie-name');
 cookieValueInput = document.getElementById('cookie-value');
@@ -20,9 +21,10 @@ async function checkAuthentication() {
     if (response.authenticated) {
         loginForm.style.display = "none";
         authBox.style.display = "inherit";
-        authText.innerHTML = `You are currently authenticated as user with ID ${response.user_id}`;
+        authText.innerHTML = `You are currently authenticated as user with ID ${response.user_id}.`;
         requiresAuthentication.style.display = "inherit";
         reqAuthWarning.style.display = "none";
+        stealCookieContainer.style.display = "none";
 
         populateCookieTable("cookie-info");
     } else {
@@ -30,6 +32,7 @@ async function checkAuthentication() {
         authBox.style.display = "none";
         requiresAuthentication.style.display = "none";
         reqAuthWarning.style.display = "inherit";
+        stealCookieContainer.style.display = "inherit";
     }
 }
 
@@ -49,13 +52,15 @@ const fetchSettings = {
     }
 }
 
-function signout(e) {
+async function signout(e) {
     e.preventDefault();
-    
+
     console.log("Invalidating token");
     document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
 
-    checkAuthentication();
+    await checkAuthentication();
+
+    reqAuthWarning.style.display = "none";
 }
 
 function signin(e) {

@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <link rel="stylesheet" href="../index.css">
     <link rel="stylesheet" href="session_hijacking.css">
 
@@ -79,6 +80,15 @@
             <hr>
             <h3>Examples</h3>
             <p>
+                To illustrate session hijacking we will once again <strong>authenticate as one of the users of
+                    <i>insecurebanking.com</i></strong>.
+                Their credentials can be found in the table on the right. After you have authenticated, a unique
+                (session) token is stored in the browser. This token is stored in a cookie, and is attached to each
+                request made to the
+                domain of <i>insecurebanking.com</i>. The backend of the web application then uses this token to make
+                sure that you are the person using the web application.
+            </p>
+
             <div class="login-container">
                 <div class="box" id="login-form">
                     <div class="alert alert-primary inner-box">
@@ -120,30 +130,34 @@
                                 <td>Edser</td>
                                 <td>Mantsje</td>
                             </tr>
-                                <td>2</td>
-                                <td>Mark</td>
-                                <td>Spazzy</td>
+                            <td>2</td>
+                            <td>Mark</td>
+                            <td>Spazzy</td>
                             </tr>
                             </tr>
-                                <td>3</td>
-                                <td>Sjors</td>
-                                <td>sjmdev</td>
+                            <td>3</td>
+                            <td>Sjors</td>
+                            <td>sjmdev</td>
                             </tr>
                             </tr>
-                                <td>4</td>
-                                <td>Niels</td>
-                                <td>nielsmeima</td>
+                            <td>4</td>
+                            <td>Niels</td>
+                            <td>nielsmeima</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            </p>
 
             <div id="req-auth-warning" class="alert alert-danger">
-                <h6>Please authenticate using the form before continuing.</h6>
+                <h6>Please authenticate using the login form before continuing.</h6>
             </div>
+
             <div id="requires-authentication">
+                <p>
+                    Now that you have authenticated as one of the users of <i>insecurebanking.com</i>, multiple cookies
+                    are set by the website. The names and values of these cookies are shown in the table below.
+                </p>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -155,27 +169,44 @@
                     </tbody>
                 </table>
 
-<pre class="prettyprint">
+                <p>
+                    An attacker can steal these cookies in multiple ways. TODO
+                    For simplicity sake we will assume that the attacker has succeeded in stealing the cookie containing
+                    the token. <strong>Find the <i>token</i> cookie and copy the corresponding value.</strong>
+                </p>
+
+                <p>
+                    Once the attacker possesses the token all they have to do is set the cookie in their own browser.
+                    This can be done using javascript as follows:
+                </p>
+
+                <pre class="prettyprint">
 document.cookie="token={stolen_token}; path=/"
 </pre>
+                <p>
+                    To continue, <strong>sign out and use the stolen token to hijack the session</strong>. Make sure to
+                    copy the token value before proceeding!
+                </p>
             </div>
 
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ratione autem quos pariatur nulla,
-                nostrum qui doloremque eius odit! Earum beatae laboriosam consectetur consequuntur quidem natus quod,
-                ullam ducimus libero.
+            <div class="steal-cookie-container">
+                <p>
+                    Now that we have stolen the token value, we will hijack the session of the user.
+                    <strong>Fill in the stolen token and press "hijack session"</strong>. This will set the token cookie
+                    using the stolen value, as well as refresh the website. If hijacking the session was
+                    successful the content will change as if the victim authenticated using their credentials.
+                </p>
 
-            <div>
                 <form id="form-steal-cookie">
                     <input name="cookie-name" type="text" id="cookie-name" class="form-control"
                         placeholder="Cookie name" value="token" required="">
                     <input name="cookie-value" type="password" id="cookie-value" class="form-control"
                         placeholder="Stolen cookie value" required="">
                     <div id="steal-cookie-failure"></div>
-                    <button class="btn btn-md btn-primary btn-block btn-submit inline-btn" type="submit">Hijack session</button>
+                    <button class="btn btn-md btn-primary btn-block btn-submit inline-btn" type="submit">Hijack
+                        session</button>
                 </form>
             </div>
-            </p>
         </div>
     </main>
 
