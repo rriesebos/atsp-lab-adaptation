@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="session_hijacking.css">
+
+    <title>Web-Vulnerability Platform</title>
+</head>
+
+<body onload="checkAuthentication()">
+    <!-- Menu bar  to copied over files -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark MenuBar">
+        <a class=" navbar-brand" href="../index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="../pages/sql_injection.html">SQL Injection</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../pages/xss.html">Cross-Site Scripting</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../pages/csrf.html">Cross-Site Request Forgery</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../pages/insecure_direct_object_references.html">Insecure Direct Object
+                        References</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../pages/web_cache_deception.html">Web Cache Deception</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="../pages/session_hijacking.html">Session Hijacking<span
+                            class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <a class="btn btn-primary" href="../user-portal/index.html">Go to User Portal</a>
+            <div id="reset-success" class="alert alert-success hidden" role="alert">Successful reset</div>
+            <div id="reset-failure" class="alert alert-danger hidden" role="alert">Failed to reset</div>
+            <button class="btn btn-primary ml-2" style="float: left" onclick="reset()">Reset</button>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        <h1>Session Hijacking</h1>
+        <div class="jumbotron">
+            <hr>
+            <h3>What</h3>
+            <p>
+
+            </p>
+            <hr>
+            <h3>How</h3>
+            <p>
+
+            </p>
+            <hr>
+            <h3>Consequences</h3>
+            <p>
+
+            </p>
+            <hr>
+            <h3>Prevention</h3>
+            <p>
+
+            </p>
+            <hr>
+            <h3>Examples</h3>
+            <p>
+                To illustrate session hijacking we will once again <strong>authenticate as one of the users of
+                    <i>insecurebanking.com</i></strong>.
+                Their credentials can be found in the table on the right. After you have authenticated, a unique
+                (session) token is stored in the browser. This token is stored in a cookie, and is attached to each
+                request made to the
+                domain of <i>insecurebanking.com</i>. The backend of the web application then uses this token to make
+                sure that you are the person using the web application.
+            </p>
+
+            <div class="login-container">
+                <div class="box" id="login-form">
+                    <div class="alert alert-primary inner-box">
+                        <h4 class="box-head">Logging In</h4>
+                        <form id="form-signin">
+                            <input name="id" type="text" id="signinId" class="form-control" placeholder="User ID"
+                                required="">
+                            <input name="password" type="password" id="signinPassword" class="form-control"
+                                placeholder="Password" required="">
+                            <div id="signin-failure"></div>
+                            <button onclick="signin(event)"
+                                class="btn btn-md btn-primary btn-block btn-submit inline-btn" type="submit">Sign
+                                in</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="box" id="auth-box" display="none">
+                    <div class="alert alert-success inner-box">
+                        <h4 class="box-head">Authenticated</h4>
+                        <p id="auth-text">You are currently authenticated as</p>
+                        <button onclick="signout(event)" class="btn btn-md btn-primary btn-block btn-submit inline-btn"
+                            type="submit">Sign out</button>
+                    </div>
+                </div>
+
+                <div class="box" id="creds">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">User ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Password</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Edser</td>
+                                <td>Mantsje</td>
+                            </tr>
+                            <td>2</td>
+                            <td>Mark</td>
+                            <td>Spazzy</td>
+                            </tr>
+                            </tr>
+                            <td>3</td>
+                            <td>Sjors</td>
+                            <td>sjmdev</td>
+                            </tr>
+                            </tr>
+                            <td>4</td>
+                            <td>Niels</td>
+                            <td>nielsmeima</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="req-auth-warning" class="alert alert-danger">
+                <h6>Please authenticate using the login form before continuing.</h6>
+            </div>
+
+            <div id="requires-authentication">
+                <p>
+                    Now that you have authenticated as one of the users of <i>insecurebanking.com</i>, multiple cookies
+                    are set by the website. The names and values of these cookies are shown in the table below.
+                </p>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id='cookie-info'>
+                    </tbody>
+                </table>
+
+                <p>
+                    An attacker can steal these cookies in multiple ways. TODO
+                    For simplicity sake we will assume that the attacker has succeeded in stealing the cookie containing
+                    the token. <strong>Find the <i>token</i> cookie and copy the corresponding value.</strong>
+                </p>
+
+                <p>
+                    Once the attacker possesses the token all they have to do is set the cookie in their own browser.
+                    This can be done using javascript as follows:
+                </p>
+
+                <pre class="prettyprint">
+document.cookie="token={stolen_token}; path=/"
+</pre>
+                <p>
+                    To continue, <strong>sign out and use the stolen token to hijack the session</strong>. Make sure to
+                    copy the token value before proceeding!
+                </p>
+            </div>
+
+            <div class="steal-cookie-container">
+                <p>
+                    Now that we have stolen the token value, we will hijack the session of the user.
+                    <strong>Fill in the stolen token and press "hijack session"</strong>. This will set the token cookie
+                    using the stolen value, as well as refresh the website. If hijacking the session was
+                    successful the content will change as if the victim authenticated using their credentials.
+                </p>
+
+                <form id="form-steal-cookie">
+                    <input name="cookie-name" type="text" id="cookie-name" class="form-control"
+                        placeholder="Cookie name" value="token" required="">
+                    <input name="cookie-value" type="password" id="cookie-value" class="form-control"
+                        placeholder="Stolen cookie value" required="">
+                    <div id="steal-cookie-failure"></div>
+                    <button class="btn btn-md btn-primary btn-block btn-submit inline-btn" type="submit">Hijack
+                        session</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="../reset.js"></script>
+    <script src="session_hijacking.js"></script>
+</body>
+
+</html>
