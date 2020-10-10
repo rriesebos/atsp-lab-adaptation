@@ -60,13 +60,13 @@
       <p>In 2018, <a href="https://ieeexplore.ieee.org/document/8613948">a study by Guo et al.</a> showed that about 74%
         of the 1000 most popular websites by Alexa ranking are using a Content Delivery Network (CDN).
         These CDNs are a proxy in between the client (such as web browsers) that are geographically close to the user and
-        provide various benefits. On such benefit is to reduce latency and network traffic by caching static files.
+        provide various benefits. One such benefit is to reduce latency and network traffic by caching static files.
       </p>
       <p>
         In 2017, a vulnerability was discovered by Omer Gil as explained on his
         <a href="https://omergil.blogspot.com/2017/02/web-cache-deception-attack.html">Blog</a> called <i>Web Cache Deception</i>.
         Web Cache Deception allows an attacker to steal highly confidential information of a victim, whenever the CDN
-        has cache rules that are too aggressive.
+        has caching rules that are too aggressive.
       </p>
       <hr>
       <h3>How?</h3>
@@ -78,7 +78,7 @@
           <li>The URL must be interpreted as a regular URL by the web server, and thus, return personal information on the webpage.</li>
         </ul>
       <p>
-        Let's say the attacker is looking for performing this attack on the following fictional URL: <i>somebank.com/profile</i>.
+        Let's say the attacker is looking to perform this attack on the following fictional URL: <i>somebank.com/profile</i>.
         The attacker will modify the URL to the following: <i>somebank.com/profile/img.png</i> and notices it shows the initial
         profile webpage. While opening an incognito browser, the user sees the <b>exact</b> same webpage <u>without being logged in!</u>
       </p>
@@ -89,7 +89,7 @@
       </p>
       <p>
         The attacker checks back on the same URL that the attacker sent to the victim, to see if it has been opened, and thus,
-        cached yet. If so, the attacker now sees the same HTML-content as the victim when the victim is logged in!
+        has been cached. If so, the attacker now sees the same HTML-content as the victim when the victim is logged in!
       </p>
       <h3>Consequences</h3>
       <hr>
@@ -97,7 +97,7 @@
         There are two major consequences.
       </p>
       <p>
-          First and most obviously, every information that the web server shows to the user is now in the hands of the attacker.
+          First and foremost, all information that the web server shows to the user is now in the hands of the attacker.
           It depends on the website and webpage, but examples include username, mail address, home address, telephone number,
           bank details, order history, chat messages, credit card information and anything else you can think of.
       </p><p>
@@ -106,7 +106,7 @@
           The first example would be when the page includes a form with a token linked to the user, allowing the attacker to submit
           a form on the user's behalf. A second example could be that the webpage embeds cookies / session tokens in the page.
           Then, an attacker can simply steal the session token, and depending on the security checks of the website, the attacker
-          could be logged in on the user's account.
+          could be logged in to the user's account.
       </p>
     </div>
 
@@ -175,7 +175,7 @@
       <hr>
       <p>
         Insecure Banking would like to resolve this issue, since this is an extremely severe security risk. While you saw
-        the example of WCD by adding a "?" to add more info to the URL, in reality, there are often many more ways to perform
+        the example of WCD by using a "?" to add more info to the URL, in reality, there are often many more ways to perform
         this attack. Examples are adding: "/script.js", "%0Ascript.js" (%0A = \n), "%3Bscript.js" (%3B = ;), "%23script.js" (%23 = #),
         "%3Fscript.js" (%3F = ?).
       </p>
@@ -186,7 +186,7 @@
         approach should be taken. The web server always returns the type of data being returned. For JavaScript, this is
         "application/javascript", while for CSS this is "text/css".
       </p>
-      <p>With this knowledge, change the configuration of our CDN with caching by modifyin the file: ./cdn/3-cdn-headerfilter.js.
+      <p>With this knowledge, change the configuration of our CDN with caching by modifying the file: ./cdn/3-cdn-headerfilter.js.
         Again, save the file and the CDN is automatically reconfigured. After your changes, challenge yourself to see if you
         can still perform Web Cache Deception or not.
       </p>
