@@ -1,15 +1,10 @@
-#signin-failure, #steal-cookie-failure {
-    width: 100%;
-    margin: 4px 0 16px 0 !important;
-    color: red;
-}
-
-#auth-box {
-    display: none;
-}
-
-#requires-authentication {
-    display: none;
+h3::before { 
+    display: block; 
+    content: ""; 
+    margin-top: -128px; 
+    height: 128px; 
+    visibility: hidden; 
+    pointer-events: none;
 }
 
 .login-container {
@@ -17,7 +12,7 @@
     justify-content: center;
     align-items: center;
     height: 315px;
-    margin: 16px 0;
+    margin: 32px 0;
 }
 
 .box {
@@ -38,8 +33,26 @@
     margin: 0;
 }
 
+#signin-failure, #steal-cookie-failure {
+    width: 100%;
+    margin: 4px 0 16px 0 !important;
+    color: red;
+}
+
+#auth-box {
+    display: none;
+}
+
+.cookie-table {
+    margin: 32px auto;
+}
+
 #req-auth-warning h6 {
     margin: 0;
+}
+
+#requires-authentication {
+    display: none;
 }
 
 .steal-cookie-container {
