@@ -177,7 +177,9 @@
         Insecure Banking would like to resolve this issue, since this is an extremely severe security risk. While you saw
         the example of WCD by using a "?" to add more info to the URL, in reality, there are often many more ways to perform
         this attack. Examples are adding: "/script.js", "%0Ascript.js" (%0A = \n), "%3Bscript.js" (%3B = ;), "%23script.js" (%23 = #),
-        "%3Fscript.js" (%3F = ?).
+        "%3Fscript.js" (%3F = ?). Note that often only some methods work, and not all of them. In this demonstration,
+        only the "?"-approach works. This depends on the caching mechanism, the URL rewriting rules,
+        and the implementation of the web server.
       </p>
       <p>
         Simply improving the URL filter for caching, or stricter URL parsing, is not a sustainable solution. There is a
