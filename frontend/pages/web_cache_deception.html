@@ -131,14 +131,14 @@
         being forwarded to the server, because the developers forgot to enable caching! It is up to you to enable it.
         Go to the project root folder and then to ./cdn/1-cdn-enabler.js. This is the control switch to turn caching on or off.
         Try turning caching on, and saving the file. The CDN will automatically detect the change and restart. Check if the
-        user portal through the <a href="http://localhost:3001/">CDN</a> still functions correctly.
+        user portal through the <a href="http://localhost:3001/">CDN</a> still functions correctly, or not!
       </p>
     </div>
     <div class="jumbotron">
       <h3>Part 2: Configuring Cache Rules</h3>
       <hr>
       <p>
-        As you probably noticed in the previous step, you cannot login anymore! It appears that the CDN caches every single
+        As you probably noticed in the previous step, you cannot log in and out anymore! It appears that the CDN caches every single
         request, including dynamic content and requests (such as logging in). This is not what the CDN is supposed to cache at all!
         A CDN is only supposed to cache static files, such as those ending with .js (javascript), .css (cascading stylesheet),
         and .png/.jpg/.ico (images).

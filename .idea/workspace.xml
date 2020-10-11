@@ -25,14 +25,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8d704ae-69c0-40ea-aec6-3cd30af82bb5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cdn/1-cdn-enabler.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdn/2-cdn-urlfilter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cdn/3-cdn-headerfilter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cdn/cdn.js" beforeDir="false" afterPath="$PROJECT_DIR$/cdn/cdn.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/web_cache_deception.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/web_cache_deception.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/user-portal/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/user-portal/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +109,8 @@
       <workItem from="1602230020724" duration="4277000" />
       <workItem from="1602234902477" duration="9121000" />
       <workItem from="1602323544583" duration="5569000" />
-      <workItem from="1602329444194" duration="39000" />
+      <workItem from="1602329444194" duration="153000" />
+      <workItem from="1602406900399" duration="96000" />
     </task>
     <servers />
   </component>
