@@ -75,7 +75,7 @@
             <p>
                 If the session ID is somehow obtained by an adversary, they can perform a <strong>session
                     hijacking</strong> attack, where an attacker is able to fully impersonate a victim user in the web
-                application. Attackers can perform two types of session hijacking attacks, targeted or generic. In a
+                application. Attackers can perform two types of session hijacking attacks: targeted or generic. In a
                 targeted attack, the attacker's goal is to impersonate a specific web application user, while for
                 generic attacks, the attacker's goal is to impersonate any valid or legitimate user of the web
                 application.
@@ -125,7 +125,7 @@
             <p>
                 The consequences of a session hijacking attack are devasting, but quite straightforward. Everything the
                 authenticated user can normally do on the vulnerable application, can now be performed by the attacker
-                as if they were the user. This means the severity of consequences depends on the sensitivity of the
+                as if they were the user. This means the severity of the consequences depends on the sensitivity of the
                 application. A limiting factor is the timeframe in which the user session is active (assuming a proper
                 logout implementation and cookies with a reasonable expiry date), since the access to the account is
                 revoked if the user session is destroyed.
@@ -135,7 +135,7 @@
             <p>
                 To prevent session hijacking multiple steps can be taken. First of all, it is highly recommended to use
                 existing session management mechanisms. These are provided by most popular web frameworks, and should be
-                prefered over inventing your own session management as they are tried and tested.
+                preferred over inventing your own session management as they are tried and tested.
             </p>
             <p>
                 To specifically prevent the hijacking of cookies containing the session ID, several cookie attributes
@@ -147,7 +147,7 @@
                 that an attacker cannot simply capture the session ID from web browser traffic.
             </p>
             <p>
-                The <code>HttpOnly</code> cookie attribute instructs web browsers to not to allow any scripts (e.g.
+                The <code>HttpOnly</code> cookie attribute instructs web browsers to not allow any scripts (e.g.
                 JavaScript) the ability to access the cookies via the DOM <code>document.cookie</code> object. This
                 session ID protection is mandatory to prevent session ID stealing through XSS attacks.
             </p>
