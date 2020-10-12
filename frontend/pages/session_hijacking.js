@@ -32,7 +32,6 @@ async function checkAuthentication() {
         authBox.style.display = "none";
         requiresAuthentication.style.display = "none";
         reqAuthWarning.style.display = "inherit";
-        stealCookieContainer.style.display = "inherit";
     }
 }
 
@@ -61,6 +60,7 @@ async function signout(e) {
     await checkAuthentication();
 
     reqAuthWarning.style.display = "none";
+    stealCookieContainer.style.display = "inherit";
 }
 
 function signin(e) {

