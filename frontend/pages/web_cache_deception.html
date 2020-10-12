@@ -48,7 +48,7 @@
       <a class="btn btn-primary" style="float: left" href="../user-portal/index.html">Go to User Portal</a>
       <div id="reset-success" class="alert alert-success hidden" role="alert">Successful reset</div>
       <div id="reset-failure" class="alert alert-danger hidden" role="alert">Failed to reset</div>    
-      <button class="btn btn-primary ml-2" style="float: left" onclick="reset()">Reset</a>
+      <button class="btn btn-primary ml-2" style="float: left" onclick="reset()">Reset</button>
     </div>
   </nav>
 
@@ -60,13 +60,13 @@
       <p>In 2018, <a href="https://ieeexplore.ieee.org/document/8613948">a study by Guo et al.</a> showed that about 74%
         of the 1000 most popular websites by Alexa ranking are using a Content Delivery Network (CDN).
         These CDNs are a proxy in between the client (such as web browsers) that are geographically close to the user and
-        provide various benefits. On such benefit is to reduce latency and network traffic by caching static files.
+        provide various benefits. One such benefit is to reduce latency and network traffic by caching static files.
       </p>
       <p>
         In 2017, a vulnerability was discovered by Omer Gil as explained on his
         <a href="https://omergil.blogspot.com/2017/02/web-cache-deception-attack.html">Blog</a> called <i>Web Cache Deception</i>.
         Web Cache Deception allows an attacker to steal highly confidential information of a victim, whenever the CDN
-        has cache rules that are too aggressive.
+        has caching rules that are too aggressive.
       </p>
       <hr>
       <h3>How?</h3>
@@ -78,7 +78,7 @@
           <li>The URL must be interpreted as a regular URL by the web server, and thus, return personal information on the webpage.</li>
         </ul>
       <p>
-        Let's say the attacker is looking for performing this attack on the following fictional URL: <i>somebank.com/profile</i>.
+        Let's say the attacker is looking to perform this attack on the following fictional URL: <i>somebank.com/profile</i>.
         The attacker will modify the URL to the following: <i>somebank.com/profile/img.png</i> and notices it shows the initial
         profile webpage. While opening an incognito browser, the user sees the <b>exact</b> same webpage <u>without being logged in!</u>
       </p>
@@ -89,7 +89,7 @@
       </p>
       <p>
         The attacker checks back on the same URL that the attacker sent to the victim, to see if it has been opened, and thus,
-        cached yet. If so, the attacker now sees the same HTML-content as the victim when the victim is logged in!
+        has been cached. If so, the attacker now sees the same HTML-content as the victim when the victim is logged in!
       </p>
       <h3>Consequences</h3>
       <hr>
@@ -97,7 +97,7 @@
         There are two major consequences.
       </p>
       <p>
-          First and most obviously, every information that the web server shows to the user is now in the hands of the attacker.
+          First and foremost, all information that the web server shows to the user is now in the hands of the attacker.
           It depends on the website and webpage, but examples include username, mail address, home address, telephone number,
           bank details, order history, chat messages, credit card information and anything else you can think of.
       </p><p>
@@ -106,7 +106,91 @@
           The first example would be when the page includes a form with a token linked to the user, allowing the attacker to submit
           a form on the user's behalf. A second example could be that the webpage embeds cookies / session tokens in the page.
           Then, an attacker can simply steal the session token, and depending on the security checks of the website, the attacker
-          could be logged in on the user's account.
+          could be logged in to the user's account.
+      </p>
+    </div>
+
+    <h2>Experimentation</h2>
+    <div class="jumbotron">
+      <h3>Part 1: Content Delivery Network and Caching</h3>
+      <hr>
+      <p>
+        Now, you will experiment with a Content Delivery Network. Take a look at the user portal by using the button
+        in the top right corner of the webpage. Here, you are presented with a login screen, as well as an account overview dashboard.
+        Familiarize yourself with this portal. You can use the login information given in its Cheat Sheet.
+      </p>
+      <p>
+        The default user portal is <strong>not</strong> behind a Content Delivery Network! Nevertheless, the developers of
+        Insecure Banking developed their very own CDN, running in a separate docker container! Try to open a new tab and go to
+        <a href="http://localhost:3001/">localhost:3001</a>. This means that <strong>all</strong> communication on this URL
+        passes through the CDN, acting as a proxy, in between the user and the web server. Now, verify that the user portal
+        runs exactly the same through the CDN (localhost:3001), as on the server directly (button top right).
+      </p>
+      <p>
+        Currently, the CDN does not have any real benefit yet, besides hiding the server. Every single request is still
+        being forwarded to the server, because the developers forgot to enable caching! It is up to you to enable it.
+        Go to the project root folder and then to ./cdn/1-cdn-enabler.js. This is the control switch to turn caching on or off.
+        Try turning caching on, and saving the file. The CDN will automatically detect the change and restart. Check if the
+        user portal through the <a href="http://localhost:3001/">CDN</a> still functions correctly, or not!
+      </p>
+    </div>
+    <div class="jumbotron">
+      <h3>Part 2: Configuring Cache Rules</h3>
+      <hr>
+      <p>
+        As you probably noticed in the previous step, you cannot log in and out anymore! It appears that the CDN caches every single
+        request, including dynamic content and requests (such as logging in). This is not what the CDN is supposed to cache at all!
+        A CDN is only supposed to cache static files, such as those ending with .js (javascript), .css (cascading stylesheet),
+        and .png/.jpg/.ico (images).
+      </p>
+      <p>
+        To solve this, open the file ./cdn/2-cdn-urlfilter.js, and try to configure the CDN such that it only caches static files.
+        After saving the file, the CDN should automatically reconfigure itself. Check out if you can now log in without issues.
+      </p>
+    </div>
+    <div class="jumbotron">
+      <h3>Part 3: Web Cache Deception</h3>
+      <hr>
+      <p>
+        A little bird told Insecure Banking that the dashboard page is vulnerable to Web Cache Deception. It is up to you
+        to confirm if this is indeed the case. You can use the following instructions.
+      </p>
+      <p>The first step of Web Cache Deception is to craft a URL that the CDN thinks it is a static file,
+        while the web server returns the private information. Go to the <a href="http://localhost:3001/dashboard.html">dashboard</a>
+        and try adding something to the URL such that it ends with something like .js. Hint: you can use the question mark
+        to add parameters to the URL, for instance: dashboard.html?key=val.
+      </p>
+      <p>Now, open an incognito browser where you are <strong>not</strong> logged in, and open the exact same URL in there.
+      If the URL you crafted before is indeed vulnerable to web cache deception, you would now see a logged in page, without
+      actually being logged in! Now, you can send a similar URL to a victim, and steal all of his/her information. Wow!
+      </p>
+      <p><i>Disclaimer:</i> Usually, WCD only works on a page that returns dynamic content. The User Portal, in fact, actually
+      only returns dynamic content, because data is fetched from an API. This method works out-of-the-box with serverside rendering
+      such as PHP/PERL/Python-based websites. On websites with dynamic content, you can still perform WCD, but you would then
+        cache API responses, that the victim must open one way or another. However, for demonstration purposes, we added
+      all characters after the dashboard.html to all API requests as well on that page.</p>
+    </div>
+    <div class="jumbotron">
+      <h3>Part 4: Prevention of WCD</h3>
+      <hr>
+      <p>
+        Insecure Banking would like to resolve this issue, since this is an extremely severe security risk. While you saw
+        the example of WCD by using a "?" to add more info to the URL, in reality, there are often many more ways to perform
+        this attack. Examples are adding: "/script.js", "%0Ascript.js" (%0A = \n), "%3Bscript.js" (%3B = ;), "%23script.js" (%23 = #),
+        "%3Fscript.js" (%3F = ?). Note that often only some methods work, and not all of them. In this demonstration,
+        only the "?"-approach works. This depends on the caching mechanism, the URL rewriting rules,
+        and the implementation of the web server.
+      </p>
+      <p>
+        Simply improving the URL filter for caching, or stricter URL parsing, is not a sustainable solution. There is a
+        great risk that someone who adds a new page allows for URL manipulation as well,
+        such as a news article /articles/1/my-title being changed to /articles/1/script.js. Therefore, a different
+        approach should be taken. The web server always returns the type of data being returned. For JavaScript, this is
+        "application/javascript", while for CSS this is "text/css".
+      </p>
+      <p>With this knowledge, change the configuration of our CDN with caching by modifying the file: ./cdn/3-cdn-headerfilter.js.
+        Again, save the file and the CDN is automatically reconfigured. After your changes, challenge yourself to see if you
+        can still perform Web Cache Deception or not.
       </p>
     </div>
   </main>
