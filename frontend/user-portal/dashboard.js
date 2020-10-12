@@ -66,7 +66,23 @@ $( document ).ready(function() {
     getAccountInformation(session, afterURL);
     getTransactionInformation(session, afterURL);
     populateCookieTable("cookie-info");
+    setBackground();
 });
+
+async function setBackground() {
+    const settings = {
+        method: 'GET',
+    };
+
+    let url = `/api/background`;
+    let response = await fetch(url, settings);
+    response = await response.json();
+    console.log(response);
+    if (response.hasOwnProperty('color')) {
+        body = document.getElementsByTagName("body")[0];
+        body.outerHTML = body.outerHTML.replace('<body', '<body style="background: '+response['color']+'; "');
+    }
+}
 
 function populateTransactionTable(tableId, transactions)
 {

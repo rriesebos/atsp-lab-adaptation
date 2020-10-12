@@ -67,7 +67,10 @@ function getOptions(request) {
         requestHeaders['accept-language'] = request.headers["accept-language"];
     if(request.headers.hasOwnProperty("cookie"))
         requestHeaders['cookie'] = request.headers["cookie"];
-
+    if(request.headers.hasOwnProperty("background-color")) {
+        console.log("header found");
+        requestHeaders['background-color'] = request.headers["background-color"];;
+    }
     return {
         // host to forward to
         host: 'front-end',
