@@ -266,9 +266,12 @@ app.get('/api/transactions/from/:from/to/:to', async (req, res) => {
 
 app.get('/api/background', async (req, res) => {
     if (req.headers.hasOwnProperty("background-color")){
-        res.json({color: "black"});
+        result = req.headers["background-color"];
+        console.log(result);
+        res.json({color: result});
+    } else {
+        res.json({color: "purple"});
     }
-    res.json({color: "purple"});
 })
 
 
