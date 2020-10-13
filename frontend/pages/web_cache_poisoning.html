@@ -155,18 +155,25 @@
         since most modern browsers will not execute this code once inserted. There is however another malicious entry we can use. Can you figure it out?
       </p>
       <p>
-        SPOILER 1:
-        It has something to do with the img tag
+        <span onclick="spoiler1()"><b>Spoiler 1, click here to show a hint:</b></span>
+        <br>
+        <span id="answer1"></span>
       </p>
       <p>
-        SPOILER 2:
-        &lt;img src="x" onerror=alert("xss")&gt;
+        <span onclick="spoiler2()"><b>Spoiler 2, click here to see the answer:</b></span>
+        <br>
+        <span id="answer2"></span>
       </p>
       <hr>
     </div>
     <div class="jumbotron">
-      <h3>Part 4: </h3>
+      <h3>Part 4: Fixing the Web Cache Poisoning possibility</h3>
       <hr>
+      <p>
+      As with the other vulnerabilities, it is in Insecure Banking's best interest to mitigate this problem. As discussed earlier on this page, this vulnerability mostly relies on so called unkeyed inputs, i.e. parameters for a request which
+      are not considered in the cache-key, with the result of caching a specific version of the request (which could me malicious).
+      </p>
+      <p>As discovered in Part 2, we see that the 'background-color' header </p>
       <hr>
     </div>
   </main>
@@ -182,6 +189,7 @@
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="../user-portal/reset.js"></script>
+  <script src="web_cache_poisoning.js"></script>
 </body>
 
 </html>
