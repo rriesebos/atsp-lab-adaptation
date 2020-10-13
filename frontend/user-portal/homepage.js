@@ -72,7 +72,7 @@ async function blue_button(){
             }
         };
 
-    let url = `/api/background`;
+    let url = `/api/background.html`;
     let response = await fetch(url, settings);
     response = await response.text();
     console.log(response);
@@ -87,7 +87,7 @@ async function red_button(){
             }
         };
 
-    let url = `/api/background`;
+    let url = `/api/background.html`;
     let response = await fetch(url, settings);
     response = await response.text();
     console.log(response);
@@ -95,14 +95,16 @@ async function red_button(){
 }
 
 async function xss_button(){
+    input = document.getElementById('header-input').value;
     const settings = {
             method: 'GET',
             headers: {
-                'background-color': '"><img src="x" onerror=alert("xss")><!--'
+                //'background-color': '"><img src="x" onerror=alert("xss")><!--'
+                'background-color': input
             }
         };
 
-    let url = `/api/background`;
+    let url = `/api/background.html`;
     let response = await fetch(url, settings);
     response = await response.text();
     console.log(response);
@@ -114,7 +116,7 @@ async function initial_background() {
         method: 'GET',
     };
 
-    let url = `/api/background`;
+    let url = `/api/background.html`;
     let response = await fetch(url, settings);
             response = await response.text();
     console.log(response);

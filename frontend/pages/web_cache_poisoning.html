@@ -56,28 +56,112 @@
   </nav>
 
   <main role="main" class="container">
-    <h1>Web Cache Deception</h1>
+    <h1>Web Cache Poisoning</h1>
     <div class="jumbotron">
       <hr>
-      <h3>What?</h3>
+      <h3>What</h3>
+      <p>In short, Web Cache Poisoning is a technique where an attacker is able store a malicious request in the web-cache, which will then be served to other users.
+        This is mostly achieved by abusing wrongly configured web-cache systems, such as CDNs. An important thing to note is that the actual result of the malicious request
+        can be context-dependent, and Web Cache Poisoning is only the technique of storing this request.
+      </p>
+      <p>
+        In 2017, a vulnerability was discovered by Omer Gil as explained on his
+        <a href="https://omergil.blogspot.com/2017/02/web-cache-deception-attack.html">Blog</a> called <i>Web Cache Deception</i>.
+        Web Cache Deception allows an attacker to steal highly confidential information of a victim, whenever the CDN
+        has caching rules that are too aggressive.
+      </p>
       <hr>
       <h3>How?</h3>
       <hr>
+      <p>First, the attacker needs to find a vulnerable website by trying to modify the URL. There are two conditions
+        that must hold for this URL, in order to perform an attack:</p>
+      <ul>
+        <li>The intermediate proxy with caching must think the URL is a static file and will cache the response from the web server.</li>
+        <li>The URL must be interpreted as a regular URL by the web server, and thus, return personal information on the webpage.</li>
+      </ul>
+      <p>
+        Let's say the attacker is looking to perform this attack on the following fictional URL: <i>somebank.com/profile</i>.
+        The attacker will modify the URL to the following: <i>somebank.com/profile/img.png</i> and notices it shows the initial
+        profile webpage. While opening an incognito browser, the user sees the <b>exact</b> same webpage <u>without being logged in!</u>
+      </p>
+      <p>
+        Hence, the attacker sends a slightly different URL (to bypass cache) to the victim. The victim opens the URL, but
+        sees a regular webpage. The user has no reason for suspicion, because there is nothing odd about the webpage
+        (besides the slight URL modification).
+      </p>
+      <p>
+        The attacker checks back on the same URL that the attacker sent to the victim, to see if it has been opened, and thus,
+        has been cached. If so, the attacker now sees the same HTML-content as the victim when the victim is logged in!
+      </p>
       <h3>Consequences</h3>
       <hr>
+      <p>
+        The consequences of such an attack can vary widely, and are largely depentend on the additional exploit this attack is combined with, as well as the amount of time that
+        this malicious request is serverd to unsuspecting users via the cache.
+      </p>
+      <p>
+        First and foremost, all information that the web server shows to the user is now in the hands of the attacker.
+        It depends on the website and webpage, but examples include username, mail address, home address, telephone number,
+        bank details, order history, chat messages, credit card information and anything else you can think of.
+      </p><p>
+      There is also a second consequence that perhaps occurs less frequently, but could be even more dangerous. In case
+      the web server also embeds any sort of tokens in the HTML DOM, these can be stolen by the attacker as well.
+      The first example would be when the page includes a form with a token linked to the user, allowing the attacker to submit
+      a form on the user's behalf. A second example could be that the webpage embeds cookies / session tokens in the page.
+      Then, an attacker can simply steal the session token, and depending on the security checks of the website, the attacker
+      could be logged in to the user's account.
+    </p>
     </div>
 
     <h2>Experimentation</h2>
     <div class="jumbotron">
       <h3>Part 1: </h3>
+      <p>
+      We will first provide some context for our practical use-case. The product-owners of Insecure Banking felt it was time to attract a more youthful audience.
+      They finally settled on implementing a new easter-egg on the new homepage. This easter-egg will change your background-color dependent on the HTTP header
+        `background-color` you give it. Go ahead, <a href="http://localhost:3001/homepage.html">give it a try!</a>
+      </p>
+      <p>
+        Several buttons are already implemented to give you a different background color. Also note the piece of text describing your background color, it can tell us quite a bit!
+        Try selecting the different buttons, and see what happens. In the text-input, we can provide the `background-color` header with our own input. Try some colors, like navy, green, pink and
+        black.
+      In all their excitement, they rushed the release. This resulted in some caching issues, which is something we can abuse.
+      </p>
+      <p>
+      But to start this, the CDN has to be activated! Go to the project root folder and then to ./cdn/1-cdn-enabler.js. This is the control switch to turn caching on or off. Try turning caching on, and saving the file.
+      The CDN will automatically detect the change and restart. When this is done, we can look and marvel at the beauty of our <a href="http://localhost:3001/homepage.html">new homepage</a>
+      </p>
       <hr>
     </div>
     <div class="jumbotron">
       <h3>Part 2: </h3>
+      <p>
+      Hmmmm, it seems that the background-color header is an unkeyed input! Notice how the first request send with an empty cache is cached, and returned to all users (even when requesting another background-color)!
+      To check this, first press the reset button in the top right corner in order to clear the cache of our CDN. After this, press one of the buttons on the page to request a new background-color, for example red.
+      Notice how you cannot seem to get another background color after this (as long as you don't clear the cache). Try this by pressing the other buttons, or opening a new (incognito) window and navigating to <a href="http://localhost:3001/homepage.html">http://localhost:3001/homepage.html"</a>
+      </p>
       <hr>
     </div>
     <div class="jumbotron">
       <h3>Part 3: </h3>
+      <p>
+        Now we can try to perform a Web Cache Poisoning attack, by requesting a malicious request right as the requested page is not yet cached. In a real application, this could take some time, and requires to user
+        to exactly know when the caches are refreshed. Luckely our application has a button to clear the cache. If we press this button, we know that the cache is empty and that the next request is stored in the cache.
+      </p>
+      <p>
+        Notice the piece of text telling you about the special background color we have? We can potentially use this to perform an attack. An insider has told us that because of time-constraints, the exact value of the header
+        is added after this sentence in the HTML. This could give us an opportuinity for an XSS attack.
+        We do have one problem though: the background color is not immediately set, but is only applied after the page is loaded. This means that using a basic &lt;script&gt;alert("xss")&lt;/script&gt; would not work,
+        since most modern browsers will not execute this code once inserted. There is however another malicious entry we can use. Can you figure it out?
+      </p>
+      <p>
+        SPOILER 1:
+        It has something to do with the img tag
+      </p>
+      <p>
+        SPOILER 2:
+        &lt;img src="x" onerror=alert("xss")&gt;
+      </p>
       <hr>
     </div>
     <div class="jumbotron">

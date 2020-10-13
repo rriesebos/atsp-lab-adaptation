@@ -264,7 +264,7 @@ app.get('/api/transactions/from/:from/to/:to', async (req, res) => {
   }
 })
 
-app.get('/api/background', async (req, res) => {
+app.get('/api/background.html', async (req, res) => {
     if (req.headers.hasOwnProperty("background-color")){
         result = req.headers["background-color"];
         console.log(result);
@@ -273,17 +273,6 @@ app.get('/api/background', async (req, res) => {
         res.send("grey");
     }
 })
-
-app.get('/api/background2', async (req, res) => {
-    if (req.headers.hasOwnProperty("background-color")){
-        result = req.headers["background-color"];
-        console.log(result);
-        res.send("color");
-    } else {
-        res.send("no colourzzz");
-    }
-})
-
 
 app.use(morgan('short'));
 app.use(express.json());
