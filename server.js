@@ -268,9 +268,19 @@ app.get('/api/background', async (req, res) => {
     if (req.headers.hasOwnProperty("background-color")){
         result = req.headers["background-color"];
         console.log(result);
-        res.json({color: result});
+        res.send(result);
     } else {
-        res.json({color: "purple"});
+        res.send("grey");
+    }
+})
+
+app.get('/api/background2', async (req, res) => {
+    if (req.headers.hasOwnProperty("background-color")){
+        result = req.headers["background-color"];
+        console.log(result);
+        res.send("color");
+    } else {
+        res.send("no colourzzz");
     }
 })
 

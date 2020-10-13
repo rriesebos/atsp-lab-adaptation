@@ -72,14 +72,11 @@ async function blue_button(){
             }
         };
 
-        let url = `/api/background`;
-        let response = await fetch(url, settings);
-                response = await response.json();
-        console.log(response);
-        if (response.hasOwnProperty('color')) {
-            color = response['color'];
-            setBackgroundColor(color);
-        }
+    let url = `/api/background`;
+    let response = await fetch(url, settings);
+    response = await response.text();
+    console.log(response);
+    setBackgroundColor(response);
 }
 
 async function red_button(){
@@ -90,14 +87,11 @@ async function red_button(){
             }
         };
 
-        let url = `/api/background`;
-        let response = await fetch(url, settings);
-                response = await response.json();
-        console.log(response);
-        if (response.hasOwnProperty('color')) {
-            color = response['color'];
-            setBackgroundColor(color);
-        }
+    let url = `/api/background`;
+    let response = await fetch(url, settings);
+    response = await response.text();
+    console.log(response);
+    setBackgroundColor(response);
 }
 
 async function xss_button(){
@@ -108,14 +102,11 @@ async function xss_button(){
             }
         };
 
-        let url = `/api/background`;
-        let response = await fetch(url, settings);
-                response = await response.json();
-        console.log(response);
-        if (response.hasOwnProperty('color')) {
-            color = response['color'];
-            setBackgroundColor(color);
-        }
+    let url = `/api/background`;
+    let response = await fetch(url, settings);
+    response = await response.text();
+    console.log(response);
+    setBackgroundColor(response);
 }
 
 async function initial_background() {
@@ -125,12 +116,9 @@ async function initial_background() {
 
     let url = `/api/background`;
     let response = await fetch(url, settings);
-            response = await response.json();
+            response = await response.text();
     console.log(response);
-    if (response.hasOwnProperty('color')) {
-        color = response['color'];
-        setBackgroundColor(color);
-    }
+    setBackgroundColor(response);
 }
 
 function setBackgroundColor(color) {
