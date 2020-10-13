@@ -25,6 +25,15 @@ function shouldRequestBeCached(request, response) {
 }
 
 app.all('/*', function(request, response) {
+    if(request.url === "/clear") {
+        console.log("Cache is being cleared!");
+        cache = {};
+        response.json({
+            success: true
+        });
+        return;
+    }
+
     const options = getOptions(request);
 
     if(sendCachedResponse(request, response)) {
