@@ -61,15 +61,14 @@ async function getTransactionInformation(session, afterURL) {
 $( document ).ready(function() {
     // Simulate WCD on this page
     afterURL = document.URL.split("dashboard.html")[1];
-    setBackground();
+    initial_background();
 });
 
 async function blue_button(){
     const settings = {
             method: 'GET',
             headers: {
-                //'background-color': '"><img src="x" onerror=alert("xss")><!--'
-                'background-color': '"><img src="x" onerror=window.location.reload()><!--'
+                'background-color': 'blue'
             }
         };
 
@@ -77,10 +76,49 @@ async function blue_button(){
         let response = await fetch(url, settings);
                 response = await response.json();
         console.log(response);
-    location.reload();
+        if (response.hasOwnProperty('color')) {
+            color = response['color'];
+            setBackgroundColor(color);
+        }
 }
 
-async function setBackground() {
+async function red_button(){
+    const settings = {
+            method: 'GET',
+            headers: {
+                'background-color': 'red'
+            }
+        };
+
+        let url = `/api/background`;
+        let response = await fetch(url, settings);
+                response = await response.json();
+        console.log(response);
+        if (response.hasOwnProperty('color')) {
+            color = response['color'];
+            setBackgroundColor(color);
+        }
+}
+
+async function xss_button(){
+    const settings = {
+            method: 'GET',
+            headers: {
+                'background-color': '"><img src="x" onerror=alert("xss")><!--'
+            }
+        };
+
+        let url = `/api/background`;
+        let response = await fetch(url, settings);
+                response = await response.json();
+        console.log(response);
+        if (response.hasOwnProperty('color')) {
+            color = response['color'];
+            setBackgroundColor(color);
+        }
+}
+
+async function initial_background() {
     const settings = {
         method: 'GET',
     };
@@ -91,10 +129,15 @@ async function setBackground() {
     console.log(response);
     if (response.hasOwnProperty('color')) {
         color = response['color'];
-        body = document.getElementsByTagName("body")[0];
-        body.outerHTML = body.outerHTML.replace('<body', '<body style="background: '+color+'; "');
-        document.getElementById("easter_egg").innerHTML = "You special background has the color: " + color;
+        setBackgroundColor(color);
     }
+}
+
+function setBackgroundColor(color) {
+    console.log(color);
+    body = document.getElementsByTagName("body")[0];
+    body.style.background = color;
+    document.getElementById("easter_egg").innerHTML = "You special background has the color: " + color;
 }
 
 function populateTransactionTable(tableId, transactions)
