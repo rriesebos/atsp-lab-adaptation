@@ -73,15 +73,14 @@
         </p>
         <p>
             An example is the following request:
-            <br />
-            <var>
-                GET <span style="color: red;">/my/vulnerable/page?isVulnerable=true HTTP/1.1</span><br />
-                Host: <span style="color: red;">example.com</span><br />
-                User-Agent: Mozilla/5.0<br />
-                Accept: */*<br />
-                X-selected-language: <span style="color: blue;">en</span><br />
-                Cookie: ASP.NET_Session=23131;
-            </var>
+<pre>
+GET <span style="color: red;">/my/vulnerable/page?isVulnerable=true HTTP/1.1</span>
+Host: <span style="color: red;">example.com</span>
+User-Agent: Mozilla/5.0
+Accept: */*
+X-selected-language: <span style="color: blue;">en</span>
+Cookie: ASP.NET_Session=23131;
+</pre>
         </p>
         <p>
             In the example above, the <span style="color: red;">red</span> portions are key-headers, and are evaluated to determine the cache response. The <span style="color: blue;">blue</span> header is a so called
