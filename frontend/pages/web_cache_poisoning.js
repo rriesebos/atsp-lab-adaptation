@@ -3,5 +3,5 @@ function spoiler1() {
 }
 
 function spoiler2() {
-    document.getElementById("answer2").innerHTML = '<var>&lt;img src="x" onerror=alert("xss")&gt;</var>';
+    document.getElementById("answer2").style.display = "inherit";
 }

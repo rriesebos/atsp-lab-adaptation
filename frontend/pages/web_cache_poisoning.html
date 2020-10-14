@@ -57,7 +57,7 @@
         <h3>What</h3>
         <p>
             As can be seen with other vulnerabilities on this site, caching is both a blessing and a curse. Incorrect usage and caching-configurations can introduce several vulnerabilities into a system. One of those is Web Cache
-            Poisoning. Mostly regarded as a theoretical vulnerability, it still forces programmers to always keep it in mind while developing systems which involve caching.
+            Poisoning. Mostly regarded as a theoretical vulnerability, it still forces programmers to always keep it in mind while developing systems that involve caching.
         </p>
         <p>
             In short, <i>Web Cache Poisoning</i> is a technique where an attacker is able store a malicious request in the web-cache, which will then be served to other users. This is mostly achieved by abusing wrongly configured
@@ -68,8 +68,8 @@
         <h3>How</h3>
         <hr />
         <p>
-            <i>Web Cache Poisoning</i> mostly relies on the incorrect configuration of so called <i>cache-keys</i>. When a user requests a page, the cache-system has to determine whether it has to forward the request to the back-end
-            server, or if it can serve the request directly. The system identify equivalent requests by comparing a predefined subset of the headers, and if they are equivalent the cached version is returned.
+            <i>Web Cache Poisoning</i> mostly relies on the incorrect configuration of so called <i>cache-keys</i>. When a user requests a page, the cache-system determines whether it has to forward the request to the back-end
+            server, or if it can serve the request directly. The system identifies equivalent requests by comparing a predefined subset of the headers - if they are equivalent the cached version is returned.
         </p>
         <p>
             An example is the following request:
@@ -87,11 +87,11 @@
             In the example above, the <span style="color: red;">red</span> portions are key-headers, and are evaluated to determine the cache response. The <span style="color: blue;">blue</span> header is a so called
             <i>unkeyed input header</i>. These are not considered when determining if a cached response can be returned. In this case it can have unintended consequences. If a person first requests the page with a language of
             <var>en</var> (English), this response is cached. A subsequent request with a selected language of <var>nl</var> (Dutch) will also receive the English version. This is because the <var>selected-language</var> header is
-            not taken into account when determining the cache-key, and thus the system considers the two requests above as equivalent. Therefor it returns the cached response.
+            not taken into account when determining the cache-key, and thus the system considers the two requests above as equivalent. Therefore it returns the cached response.
         </p>
         <p>
-            The attack of <i>Web Cache Poisoning</i> is based in these key-headers. It specifically relies on so called <i>unkeyed input headers</i>. <i>Unkeyed</i> means that this header is not used in the cache-key. As a result of
-            this, the cached response returned by the cache is most likely a request with the specific value of this header of the request which generated the cache. Input means that this header is used as an input for some sort of
+            The <i>Web Cache Poisoning</i> attack is based on these key-headers. It specifically relies on the <i>unkeyed input headers</i>. <i>Unkeyed</i> means that this header is not used in the cache-key. As a result of
+            this, the response returned by the cache is most likely a request with the specific value of this header of the request that generated the cache. Input means that this header is used as an input for some sort of
             logic in the response. This could be a query, a special cookie value, or some other sort of value which is used in the response. This also gives the attacker potential options to input malicious requests.
         </p>
         <h3>Consequences</h3>
@@ -100,7 +100,7 @@
             The consequences of such an attack can vary widely, and are largely dependent on the additional exploit this attack is combined with, as well as the amount of time that this malicious request is served to unsuspecting
             users via the cache.
         </p>
-        <p>The Web Cache Poisoning part of the attack is not inherently disastrous, it’s the attack performed by the poisoned cached response which can cause the majority of the <damages class=""></damages></p>
+        <p>The Web Cache Poisoning part of the attack is not inherently disastrous, it’s the attack performed by the poisoned cache response that can cause the majority of the damage.</p>
     </div>
 
     <h2>Experimentation</h2>
@@ -119,7 +119,7 @@
         </p>
         <p>
             But to start this, the CDN has to be activated! Go to the project root folder and then to <var>./cdn/1-cdn-enabler.js</var>. This is the control switch to turn caching on or off. Try turning caching on, and saving the
-            file. The CDN will automatically detect the change and restart. When this is done, we can look and marvel at the beauty of our <a href="http://localhost:3001/homepage.html">new homepage</a>
+            file. The CDN will automatically detect the change and restart. When this is done, we can look and marvel at the beauty of our <a href="http://localhost:3001/homepage.html">new homepage</a>.
         </p>
         <hr />
     </div>
@@ -130,22 +130,22 @@
             requesting a different background-color)!
         </p>
         <p>
-            To check this, first press the reset button in the top right corner in order to clear the cache of our CDN. After this, press one of the buttons on the page to request a new background-color, for example red. Notice how
+            To confirm this, first press the reset button in the top right corner in order to clear the cache of our CDN. After this, press one of the buttons on the page to request a new background-color, for example red. Notice how
             you cannot seem to get another background color after this (as long as you don't clear the cache). Try this by pressing the other buttons, or opening a new (incognito) window and navigating to
-            <a href="http://localhost:3001/homepage.html">http://localhost:3001/homepage.html</a>
+            <a href="http://localhost:3001/homepage.html">http://localhost:3001/homepage.html</a>.
         </p>
         <hr />
     </div>
     <div class="jumbotron">
-        <h3>Part 3: Setting up our Web Cache Poising attack with XSS</h3>
+        <h3>Part 3: Setting up our Web Cache Poisoning attack with XSS</h3>
         <p>
-            Now that we know that the <var>background-color</var> headers is an <i>unkeyed input</i>, and the value of this header is directly used in web page, we can try to perform a Web Cache Poisoning attack. We can do this by
-            requesting a malicious request right as the requested page is not yet cached. In a real-life application, this could take some time, and requires to user to exactly know when the caches are refreshed/empty. Luckily our
+            Now that we know that the <var>background-color</var> header is an <i>unkeyed input</i>, and the value of this header is directly used in web page, we can try to perform a Web Cache Poisoning attack. We can do this by
+            requesting a malicious request when the requested page is not yet cached. In a real-life application, this could take some time, and requires the user to exactly know when the caches are refreshed/empty. Luckily our
             application has a button to clear the cache. If we press this button, we know that the cache is empty and that the next request is stored in the cache.
         </p>
         <p>
-            Notice the piece of text "You special background has the color:"? We can potentially use this to perform an attack. An insider has told us that because of time-constraints, the exact value of the header is added after
-            this sentence in the HTML. This could give us an opportuinity for an XSS attack. We do have one problem though: the background color is not immediately set, but is only applied after the page is loaded. This means that
+            Notice the piece of text "Your special background has the color:"? We can potentially use this to perform an attack. An insider has told us that because of time-constraints, the exact value of the header is added after
+            this sentence in the HTML. This could give us an opportunity for an XSS attack. We do have one problem though: the background color is not immediately set, but is only applied after the page is loaded. This means that
             using a basic <var>&lt;script&gt;alert("xss")&lt;/script&gt;</var> would not work, since most modern browsers will not execute this code once inserted. There is however another malicious entry we can use. Can you figure
             it out?
         </p>
@@ -157,7 +157,11 @@
         <p>
             <span onclick="spoiler2()"><b>Spoiler 2, click here to see the answer:</b></span>
             <br />
-            <span id="answer2"></span>
+            <div id="answer2" style="display: none;">
+<pre class="prettyprint">
+&lt;img src="x" onerror=alert("xss")&gt;
+</pre>
+            </div>
         </p>
         <hr />
     </div>
@@ -171,7 +175,7 @@
         <p>
             As discovered in Part 2, we see that the <var>background-color</var> header is an <i>unkeyed input</i>. This probably has to do with the way our cache-keys are generated. Your task is to make the
             <var>background-color</var> header a keyed input, by improving the cache-key generation function. This function can be found in the file <var>./cdn/4-cdn-key-generator.js</var>. Test your solution by repeating Steps 2
-            and 3. If your solution is succesfull, you should be able to retrieve different background-colors, but same requests will be cached and served by the CDN. It is true that a user can still receive a malicious request, if the user
+            and 3. If your solution is succesful, you should be able to retrieve different background-colors, but indentical requests will be cached and served by the CDN. It is true that a user can still receive a malicious request, if the user
             requests this malicious request specifically. To deal with this, the XSS vulnerability has to be fixed, but this is outside the scope of this exercise.
         </p>
         <p>
