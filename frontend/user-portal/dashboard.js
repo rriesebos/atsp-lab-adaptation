@@ -66,7 +66,6 @@ $( document ).ready(function() {
     getAccountInformation(session, afterURL);
     getTransactionInformation(session, afterURL);
     populateCookieTable("cookie-info");
-    setBackground();
 });
 
 function populateTransactionTable(tableId, transactions)
