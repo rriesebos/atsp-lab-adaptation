@@ -1,7 +1,7 @@
 function spoiler1() {
-    document.getElementById("answer1").innerHTML = "It has something to do with the 'img' tag.";
+    document.getElementById("answer1").innerHTML = "It has something to do with the <var>img</var> tag.";
 }
 
 function spoiler2() {
-    document.getElementById("answer2").innerHTML = '&lt;img src="x" onerror=alert("xss")&gt;';
+    document.getElementById("answer2").innerHTML = '<var>&lt;img src="x" onerror=alert("xss")&gt;</var>';
 }

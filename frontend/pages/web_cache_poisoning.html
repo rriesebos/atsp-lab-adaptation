@@ -1,195 +1,191 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="../user-portal/common.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../user-portal/common.css" />
 
-  <title>Web-Vulnerability Platform</title>
+    <title>Web-Vulnerability Platform</title>
 </head>
 
 <body>
-
-  <!-- Menu bar  to copied over files -->
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark MenuBar">
-    <a class=" navbar-brand" href="../index.html">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+<!-- Menu bar  to copied over files -->
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark MenuBar">
+    <a class="navbar-brand" href="../index.html">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="../pages/sql_injection.html">SQL Injection</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../pages/xss.html">Cross-Site Scripting</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../pages/csrf.html">Cross-Site Request Forgery</a>
-        </li>
-          <li class="nav-item">
-          <a class="nav-link" href="../pages/insecure_direct_object_references.html">Insecure Direct Object References</a>  
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../pages/web_cache_deception.html">Web Cache Deception</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../pages/session_hijacking.html">Session Hijacking</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="../pages/web_cache_poisoning.html">Web Cache Poisoning<span
-                  class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-      <a class="btn btn-primary" style="float: left" href="../user-portal/index.html">Go to User Portal</a>
-      <div id="reset-success" class="alert alert-success hidden" role="alert">Successful reset</div>
-      <div id="reset-failure" class="alert alert-danger hidden" role="alert">Failed to reset</div>    
-      <button class="btn btn-primary ml-2" style="float: left" onclick="reset()">Reset</button>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="../pages/sql_injection.html">SQL Injection</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../pages/xss.html">Cross-Site Scripting</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../pages/csrf.html">Cross-Site Request Forgery</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../pages/insecure_direct_object_references.html">Insecure Direct Object References</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../pages/web_cache_deception.html">Web Cache Deception</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../pages/session_hijacking.html">Session Hijacking</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="../pages/web_cache_poisoning.html">Web Cache Poisoning<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <a class="btn btn-primary" style="float: left;" href="../user-portal/index.html">Go to User Portal</a>
+        <div id="reset-success" class="alert alert-success hidden" role="alert">Successful reset</div>
+        <div id="reset-failure" class="alert alert-danger hidden" role="alert">Failed to reset</div>
+        <button class="btn btn-primary ml-2" style="float: left;" onclick="reset()">Reset</button>
     </div>
-  </nav>
+</nav>
 
-  <main role="main" class="container">
+<main role="main" class="container">
     <h1>Web Cache Poisoning</h1>
     <div class="jumbotron">
-      <hr>
-      <h3>What</h3>
-      <p>In short, Web Cache Poisoning is a technique where an attacker is able store a malicious request in the web-cache, which will then be served to other users.
-        This is mostly achieved by abusing wrongly configured web-cache systems, such as CDNs. An important thing to note is that the actual result of the malicious request
-        can be context-dependent, and Web Cache Poisoning is only the technique of storing this request.
-      </p>
-      <p>
-        In 2017, a vulnerability was discovered by Omer Gil as explained on his
-        <a href="https://omergil.blogspot.com/2017/02/web-cache-deception-attack.html">Blog</a> called <i>Web Cache Deception</i>.
-        Web Cache Deception allows an attacker to steal highly confidential information of a victim, whenever the CDN
-        has caching rules that are too aggressive.
-      </p>
-      <hr>
-      <h3>How?</h3>
-      <hr>
-      <p>First, the attacker needs to find a vulnerable website by trying to modify the URL. There are two conditions
-        that must hold for this URL, in order to perform an attack:</p>
-      <ul>
-        <li>The intermediate proxy with caching must think the URL is a static file and will cache the response from the web server.</li>
-        <li>The URL must be interpreted as a regular URL by the web server, and thus, return personal information on the webpage.</li>
-      </ul>
-      <p>
-        Let's say the attacker is looking to perform this attack on the following fictional URL: <i>somebank.com/profile</i>.
-        The attacker will modify the URL to the following: <i>somebank.com/profile/img.png</i> and notices it shows the initial
-        profile webpage. While opening an incognito browser, the user sees the <b>exact</b> same webpage <u>without being logged in!</u>
-      </p>
-      <p>
-        Hence, the attacker sends a slightly different URL (to bypass cache) to the victim. The victim opens the URL, but
-        sees a regular webpage. The user has no reason for suspicion, because there is nothing odd about the webpage
-        (besides the slight URL modification).
-      </p>
-      <p>
-        The attacker checks back on the same URL that the attacker sent to the victim, to see if it has been opened, and thus,
-        has been cached. If so, the attacker now sees the same HTML-content as the victim when the victim is logged in!
-      </p>
-      <h3>Consequences</h3>
-      <hr>
-      <p>
-        The consequences of such an attack can vary widely, and are largely depentend on the additional exploit this attack is combined with, as well as the amount of time that
-        this malicious request is serverd to unsuspecting users via the cache.
-      </p>
-      <p>
-        First and foremost, all information that the web server shows to the user is now in the hands of the attacker.
-        It depends on the website and webpage, but examples include username, mail address, home address, telephone number,
-        bank details, order history, chat messages, credit card information and anything else you can think of.
-      </p><p>
-      There is also a second consequence that perhaps occurs less frequently, but could be even more dangerous. In case
-      the web server also embeds any sort of tokens in the HTML DOM, these can be stolen by the attacker as well.
-      The first example would be when the page includes a form with a token linked to the user, allowing the attacker to submit
-      a form on the user's behalf. A second example could be that the webpage embeds cookies / session tokens in the page.
-      Then, an attacker can simply steal the session token, and depending on the security checks of the website, the attacker
-      could be logged in to the user's account.
-    </p>
+        <hr />
+        <h3>What</h3>
+        <p>
+            As can be seen with other vulnerabilities on this site, caching is both a blessing and a curse. Incorrect usage and caching-configurations can introduce several vulnerabilities into a system. One of those is Web Cache
+            Poisoning. Mostly regarded as a theoretical vulnerability, it still forces programmers to always keep it in mind while developing systems which involve caching.
+        </p>
+        <p>
+            In short, <i>Web Cache Poisoning</i> is a technique where an attacker is able store a malicious request in the web-cache, which will then be served to other users. This is mostly achieved by abusing wrongly configured
+            web-cache systems, such as CDNs. An important thing to note is that the actual result of the malicious request can be context-dependent, and <i>Web Cache Poisoning</i> is only the technique of storing this request. A
+            great explanation of this vulnerability can be found on the <a href="https://portswigger.net/research/practical-web-cache-poisoning">blog</a> of James Kettle.
+        </p>
+        <hr />
+        <h3>How</h3>
+        <hr />
+        <p>
+            <i>Web Cache Poisoning</i> mostly relies on the incorrect configuration of so called <i>cache-keys</i>. When a user requests a page, the cache-system has to determine whether it has to forward the request to the back-end
+            server, or if it can serve the request directly. The system identify equivalent requests by comparing a predefined subset of the headers, and if they are equivalent the cached version is returned.
+        </p>
+        <p>
+            An example is the following request:
+            <br />
+            <var>
+                GET <span style="color: red;">/my/vulnerable/page?isVulnerable=true HTTP/1.1</span><br />
+                Host: <span style="color: red;">example.com</span><br />
+                User-Agent: Mozilla/5.0<br />
+                Accept: */*<br />
+                X-selected-language: <span style="color: blue;">en</span><br />
+                Cookie: ASP.NET_Session=23131;
+            </var>
+        </p>
+        <p>
+            In the example above, the <span style="color: red;">red</span> portions are key-headers, and are evaluated to determine the cache response. The <span style="color: blue;">blue</span> header is a so called
+            <i>unkeyed input header</i>. These are not considered when determining if a cached response can be returned. In this case it can have unintended consequences. If a person first requests the page with a language of
+            <var>en</var> (English), this response is cached. A subsequent request with a selected language of <var>nl</var> (Dutch) will also receive the English version. This is because the <var>selected-language</var> header is
+            not taken into account when determining the cache-key, and thus the system considers the two requests above as equivalent. Therefor it returns the cached response.
+        </p>
+        <p>
+            The attack of <i>Web Cache Poisoning</i> is based in these key-headers. It specifically relies on so called <i>unkeyed input headers</i>. <i>Unkeyed</i> means that this header is not used in the cache-key. As a result of
+            this, the cached response returned by the cache is most likely a request with the specific value of this header of the request which generated the cache. Input means that this header is used as an input for some sort of
+            logic in the response. This could be a query, a special cookie value, or some other sort of value which is used in the response. This also gives the attacker potential options to input malicious requests.
+        </p>
+        <h3>Consequences</h3>
+        <hr />
+        <p>
+            The consequences of such an attack can vary widely, and are largely dependent on the additional exploit this attack is combined with, as well as the amount of time that this malicious request is served to unsuspecting
+            users via the cache.
+        </p>
+        <p>The Web Cache Poisoning part of the attack is not inherently disastrous, it’s the attack performed by the poisoned cached response which can cause the majority of the <damages class=""></damages></p>
     </div>
 
     <h2>Experimentation</h2>
     <div class="jumbotron">
-      <h3>Part 1: </h3>
-      <p>
-      We will first provide some context for our practical use-case. The product-owners of Insecure Banking felt it was time to attract a more youthful audience.
-      They finally settled on implementing a new easter-egg on the new homepage. This easter-egg will change your background-color dependent on the HTTP header
-        `background-color` you give it. Go ahead, <a href="http://localhost:3001/homepage.html">give it a try!</a>
-      </p>
-      <p>
-        Several buttons are already implemented to give you a different background color. Also note the piece of text describing your background color, it can tell us quite a bit!
-        Try selecting the different buttons, and see what happens. In the text-input, we can provide the `background-color` header with our own input. Try some colors, like navy, green, pink and
-        black.
-      In all their excitement, they rushed the release. This resulted in some caching issues, which is something we can abuse.
-      </p>
-      <p>
-      But to start this, the CDN has to be activated! Go to the project root folder and then to ./cdn/1-cdn-enabler.js. This is the control switch to turn caching on or off. Try turning caching on, and saving the file.
-      The CDN will automatically detect the change and restart. When this is done, we can look and marvel at the beauty of our <a href="http://localhost:3001/homepage.html">new homepage</a>
-      </p>
-      <hr>
+        <h3>Part 1: Content Delivery Network and testing</h3>
+        <p>
+            We will first provide some context for our practical use-case. The product-owners of Insecure Banking felt it was time to attract a more youthful audience. They finally settled on implementing a new easter-egg on the new
+            homepage. This easter-egg will change your background-color dependent on the HTTP header
+            <var>background-color</var> you give it. Go ahead, <a href="http://localhost:3001/homepage.html">give it a try!</a>
+        </p>
+        <p>
+            Several buttons are already implemented to give you a different background color. Also note the piece of text describing your background color, it can tell us quite a bit! Try selecting the different buttons, and see
+            what happens. In the text-input, we can provide the <var>background-color</var> header with our own input. Try some colors, like <span style="color: navy;"><b>navy</b></span>,
+            <span style="color: green;"><b>green</b></span>, <span style="color: pink;"><b>pink</b></span> and <span style="color: black;"><b>black</b></span>. In all their excitement, they rushed the release. This resulted in some
+            potential issues with caching, which is something we can abuse.
+        </p>
+        <p>
+            But to start this, the CDN has to be activated! Go to the project root folder and then to <var>./cdn/1-cdn-enabler.js</var>. This is the control switch to turn caching on or off. Try turning caching on, and saving the
+            file. The CDN will automatically detect the change and restart. When this is done, we can look and marvel at the beauty of our <a href="http://localhost:3001/homepage.html">new homepage</a>
+        </p>
+        <hr />
     </div>
     <div class="jumbotron">
-      <h3>Part 2: </h3>
-      <p>
-      Hmmmm, it seems that the background-color header is an unkeyed input! Notice how the first request send with an empty cache is cached, and returned to all users (even when requesting another background-color)!
-      To check this, first press the reset button in the top right corner in order to clear the cache of our CDN. After this, press one of the buttons on the page to request a new background-color, for example red.
-      Notice how you cannot seem to get another background color after this (as long as you don't clear the cache). Try this by pressing the other buttons, or opening a new (incognito) window and navigating to <a href="http://localhost:3001/homepage.html">http://localhost:3001/homepage.html"</a>
-      </p>
-      <hr>
+        <h3>Part 2: Detecting the unkeyed headers</h3>
+        <p>
+            Hmm, it seems that the <var>background-color</var> header is an <i>unkeyed input</i>! Notice how the first request send with an empty cache is cached, after which this request is returned to all other users (even when
+            requesting a different background-color)!
+        </p>
+        <p>
+            To check this, first press the reset button in the top right corner in order to clear the cache of our CDN. After this, press one of the buttons on the page to request a new background-color, for example red. Notice how
+            you cannot seem to get another background color after this (as long as you don't clear the cache). Try this by pressing the other buttons, or opening a new (incognito) window and navigating to
+            <a href="http://localhost:3001/homepage.html">http://localhost:3001/homepage.html</a>
+        </p>
+        <hr />
     </div>
     <div class="jumbotron">
-      <h3>Part 3: </h3>
-      <p>
-        Now we can try to perform a Web Cache Poisoning attack, by requesting a malicious request right as the requested page is not yet cached. In a real application, this could take some time, and requires to user
-        to exactly know when the caches are refreshed. Luckely our application has a button to clear the cache. If we press this button, we know that the cache is empty and that the next request is stored in the cache.
-      </p>
-      <p>
-        Notice the piece of text telling you about the special background color we have? We can potentially use this to perform an attack. An insider has told us that because of time-constraints, the exact value of the header
-        is added after this sentence in the HTML. This could give us an opportuinity for an XSS attack.
-        We do have one problem though: the background color is not immediately set, but is only applied after the page is loaded. This means that using a basic &lt;script&gt;alert("xss")&lt;/script&gt; would not work,
-        since most modern browsers will not execute this code once inserted. There is however another malicious entry we can use. Can you figure it out?
-      </p>
-      <p>
-        <span onclick="spoiler1()"><b>Spoiler 1, click here to show a hint:</b></span>
-        <br>
-        <span id="answer1"></span>
-      </p>
-      <p>
-        <span onclick="spoiler2()"><b>Spoiler 2, click here to see the answer:</b></span>
-        <br>
-        <span id="answer2"></span>
-      </p>
-      <hr>
+        <h3>Part 3: Setting up our Web Cache Poising attack with XSS</h3>
+        <p>
+            Now that we know that the <var>background-color</var> headers is an <i>unkeyed input</i>, and the value of this header is directly used in web page, we can try to perform a Web Cache Poisoning attack. We can do this by
+            requesting a malicious request right as the requested page is not yet cached. In a real-life application, this could take some time, and requires to user to exactly know when the caches are refreshed/empty. Luckily our
+            application has a button to clear the cache. If we press this button, we know that the cache is empty and that the next request is stored in the cache.
+        </p>
+        <p>
+            Notice the piece of text "You special background has the color:"? We can potentially use this to perform an attack. An insider has told us that because of time-constraints, the exact value of the header is added after
+            this sentence in the HTML. This could give us an opportuinity for an XSS attack. We do have one problem though: the background color is not immediately set, but is only applied after the page is loaded. This means that
+            using a basic <var>&lt;script&gt;alert("xss")&lt;/script&gt;</var> would not work, since most modern browsers will not execute this code once inserted. There is however another malicious entry we can use. Can you figure
+            it out?
+        </p>
+        <p>
+            <span onclick="spoiler1()"><b>Spoiler 1, click here to show a hint:</b></span>
+            <br />
+            <span id="answer1"></span>
+        </p>
+        <p>
+            <span onclick="spoiler2()"><b>Spoiler 2, click here to see the answer:</b></span>
+            <br />
+            <span id="answer2"></span>
+        </p>
+        <hr />
     </div>
     <div class="jumbotron">
-      <h3>Part 4: Fixing the Web Cache Poisoning possibility</h3>
-      <hr>
-      <p>
-      As with the other vulnerabilities, it is in Insecure Banking's best interest to mitigate this problem. As discussed earlier on this page, this vulnerability mostly relies on so called unkeyed inputs, i.e. parameters for a request which
-      are not considered in the cache-key, with the result of caching a specific version of the request (which could me malicious).
-      </p>
-      <p>As discovered in Part 2, we see that the 'background-color' header </p>
-      <hr>
+        <h3>Part 4: Fixing the Web Cache Poisoning possibility</h3>
+        <hr />
+        <p>
+            As with the other vulnerabilities, it is in Insecure Banking's best interest to mitigate this problem. As discussed earlier on this page, this vulnerability mostly relies on so called <i>unkeyed inputs</i>, i.e.
+            parameters for a request which are not considered in the cache-key, which results in caching a specific version of the request (which could be malicious).
+        </p>
+        <p>
+            As discovered in Part 2, we see that the <var>background-color</var> header is an <i>unkeyed input</i>. This probably has to do with the way our cache-keys are generated. Your task is to make the
+            <var>background-color</var> header a keyed input, by improving the cache-key generation function. This function can be found in the file <var>./cdn/4-cdn-key-generator.js</var>. Test your solution by repeating Steps 2
+            and 3. If your solution is succesfull, you should be able to retrieve different background-colors, but same requests will be cached and served by the CDN. It is true that a user can still receive a malicious request, if the user
+            requests this malicious request specifically. To deal with this, the XSS vulnerability has to be fixed, but this is outside the scope of this exercise.
+        </p>
+        <p>
+            Just like Web Cache Deception, this vulnerability is also heavily dependent on a correct configuration of your Cache system. So always make sure your configuration is correct, and specific to your needs!
+        </p>
+        <hr />
     </div>
-  </main>
+</main>
 
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-  <script src="../user-portal/reset.js"></script>
-  <script src="web_cache_poisoning.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+<script src="../user-portal/reset.js"></script>
+<script src="web_cache_poisoning.js"></script>
 </body>
-
 </html>
