@@ -89,15 +89,19 @@ Cookie: ASP.NET_Session=23131;
             not taken into account when determining the cache-key, and thus the system considers the two requests above as equivalent. Therefore it returns the cached response.
         </p>
         <p>
-            The <i>Web Cache Poisoning</i> attack is based on these key-headers. It specifically relies on the <i>unkeyed input headers</i>. <i>Unkeyed</i> means that this header is not used in the cache-key. As a result of
-            this, the response returned by the cache is most likely a request with the specific value of this header of the request that generated the cache. Input means that this header is used as an input for some sort of
-            logic in the response. This could be a query, a special cookie value, or some other sort of value which is used in the response. This also gives the attacker potential options to input malicious requests.
+            The <i>Web Cache Poisoning</i> attack is based on these key-headers. It specifically relies on the <i>unkeyed input headers</i>. <i>Unkeyed</i> means that this header is not used in the cache-key.
+            As a result of this, two responses with different values of this unkeyed input header are considered identical by the cache system, and therefor are given the same cached response. In extreme cases, this could mean that the response
+            be significantly different from what you requested, dependent on the impact the unkeyed header has on the returned data.
+
+            Input means that this header is used as an input for some sort of
+            logic in the response. This input can be given by a form on a web-page, as in our example. Other ways to set this input-header are with a custom made HTTP request in a console, or special software which allows to user to
+            create custom headers. This input could be a query, a special cookie value, or some other sort of value which is used in the response. This also gives the attacker potential options to input malicious requests, such as XSS code, phishing URLs or hurtful pieces of text.
         </p>
         <h3>Consequences</h3>
         <hr />
         <p>
             The consequences of such an attack can vary widely, and are largely dependent on the additional exploit this attack is combined with, as well as the amount of time that this malicious request is served to unsuspecting
-            users via the cache.
+            users via the cache. For example, a poisoned web cache which serves a XSS attack can be more damaging than a poisoned cache which serves the users a phishing link on the website.
         </p>
         <p>The Web Cache Poisoning part of the attack is not inherently disastrous, it’s the attack performed by the poisoned cache response that can cause the majority of the damage.</p>
     </div>
