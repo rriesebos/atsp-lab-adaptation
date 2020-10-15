@@ -7,6 +7,22 @@ const fetchSettings = {
     }
 }
 
+async function checkAuthentication() {
+    const settings = {
+        method: 'GET',
+    };
+
+    let url = `/api/is_authenticated`;
+    let response = await fetch(url, settings);
+    response = await response.json();
+
+    if(!response.authenticated)
+    {
+        logout();
+    }
+    return response;
+}
+
 function logout() {
     document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
     window.location.href = "index.html";
@@ -101,6 +117,7 @@ function createMenu() {
         if(!isLoggedIn) {
             menuLeft.appendChild(getMenuItem("Login", "./index.html"));
         } else {
+            menuLeft.appendChild(getMenuItem("Homepage", "./homepage.html"));
             menuLeft.appendChild(getMenuItem("Dashboard", "./dashboard.html"));
         }
 

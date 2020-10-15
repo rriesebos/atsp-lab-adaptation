@@ -1,19 +1,3 @@
-async function checkAuthentication(afterURL) {
-    const settings = {
-        method: 'GET',
-    };
-
-    let url = `/api/is_authenticated` + afterURL;
-    let response = await fetch(url, settings);
-    response = await response.json();
-
-    if(!response.authenticated)
-    {
-        logout();
-    }
-    return response;
-}
-
 async function getAccountInformation(session, afterURL) {
     const settings = {
         method: 'GET',
@@ -56,6 +40,22 @@ async function getTransactionInformation(session, afterURL) {
         console.log(response);
         populateTransactionTable("transaction-info", response.transactions)
     })
+}
+
+async function checkAuthentication(afterURL) {
+    const settings = {
+        method: 'GET',
+    };
+
+    let url = `/api/is_authenticated` + afterURL;
+    let response = await fetch(url, settings);
+    response = await response.json();
+
+    if(!response.authenticated)
+    {
+        logout();
+    }
+    return response;
 }
 
 $( document ).ready(function() {

@@ -13,7 +13,7 @@ function signin() {
                 const date = new Date();
                 date.setTime(`${date.getTime()}${30 * 24 * 60 * 60 * 1000}`);
                 document.cookie = `token=${body['token']}; expiryDate=${date.toUTCString()}; path=/`;
-                checkAuthentication();
+                checkAuthenticationIndex();
             } else {
                 throw new Error(body['error']);
             }
@@ -25,7 +25,7 @@ function signin() {
         });
 }
 
-async function checkAuthentication() {
+async function checkAuthenticationIndex() {
     const settings = {
         method: 'GET',
     };
@@ -36,10 +36,10 @@ async function checkAuthentication() {
 
     if(response.authenticated)
     {
-        window.location.href = "dashboard.html";
+        window.location.href = "homepage.html";
     }
 }
 
 $( document ).ready(function() {
-    checkAuthentication();
+    checkAuthenticationIndex();
 });
