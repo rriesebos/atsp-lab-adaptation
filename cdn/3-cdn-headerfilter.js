@@ -17,7 +17,7 @@ module.exports = {
         // Note: the empty string acts as a wildcard -- cache everything!
 
         const headerWhitelist = {
-            "content-type": [""]
+            "content-type": ["text/css", "application/javascript", "image/jpeg", "image/png", "text/html"]
         };
 
         // Works as an OR, one match is enough to enable caching
