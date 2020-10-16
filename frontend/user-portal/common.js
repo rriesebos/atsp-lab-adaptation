@@ -94,7 +94,7 @@ function createMenuButtons(isLoggedIn) {
     menuRight.appendChild(button);
 
     // Add logout button
-    if(isLoggedIn) {
+    if(isLoggedIn.authenticated) {
         button = document.createElement("button");
         button.className = "btn btn-danger ml-2";
         button.setAttribute("onclick", "logout();");
