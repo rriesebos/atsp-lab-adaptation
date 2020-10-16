@@ -26,7 +26,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b8d704ae-69c0-40ea-aec6-3cd30af82bb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdn/1-cdn-enabler.js" beforeDir="false" afterPath="$PROJECT_DIR$/cdn/1-cdn-enabler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdn/2-cdn-urlfilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/cdn/2-cdn-urlfilter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/user-portal/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/user-portal/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/user-portal/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/dashboard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/user-portal/homepage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/homepage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/user-portal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/index.js" afterDir="false" />
@@ -116,6 +119,7 @@
       <workItem from="1602406900399" duration="230000" />
       <workItem from="1602678664824" duration="615000" />
       <workItem from="1602778635318" duration="2055000" />
+      <workItem from="1602834793143" duration="4880000" />
     </task>
     <servers />
   </component>
@@ -139,12 +143,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602057481733" />
-    <state x="2586" y="159" width="587" height="801" key="find.popup" timestamp="1602780742339">
-      <screen x="1920" y="40" width="1920" height="1040" />
+    <state x="666" y="159" width="587" height="801" key="find.popup" timestamp="1602841621292">
+      <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="666" y="119" width="587" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602234357398" />
     <state x="2586" y="119" width="587" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602255972132" />
-    <state x="2586" y="159" width="587" height="801" key="find.popup/0.40.1920.1040/1920.40.1920.1040@1920.40.1920.1040" timestamp="1602780742339" />
+    <state x="666" y="159" width="587" height="801" key="find.popup/0.40.1920.1040/1920.40.1920.1040@0.40.1920.1040" timestamp="1602841621292" />
+    <state x="2586" y="159" width="587" height="801" key="find.popup/0.40.1920.1040/1920.40.1920.1040@1920.40.1920.1040" timestamp="1602840287536" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1602233260760">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

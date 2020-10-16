@@ -5,7 +5,7 @@ module.exports = {
             // Here, a list of extensions should be specified as an array of strings
             // When at least one of them is present at the trail of the URL, caching will be enabled.
             // Note: the empty string acts as a wildcard -- cache everything!
-            const whitelist = [""];
+            const whitelist = [".css", ".js"];
 
             for(i = 0; i < whitelist.length; i++) {
                 extension = whitelist[i];

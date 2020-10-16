@@ -25,21 +25,6 @@ function signin() {
         });
 }
 
-async function checkAuthenticationIndex() {
-    const settings = {
-        method: 'GET',
-    };
-
-    let url = `/api/is_authenticated`
-    let response = await fetch(url, settings);
-    response = await response.json();
-
-    if(response.authenticated)
-    {
-        window.location.href = "homepage.html";
-    }
-}
-
 $( document ).ready(function() {
-    checkAuthenticationIndex();
+    getAuthentication(0);
 });

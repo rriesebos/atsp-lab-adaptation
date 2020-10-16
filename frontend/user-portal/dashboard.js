@@ -31,27 +31,28 @@ async function getTransactionInformation(session, afterURL) {
     };
 
     session.then(async function(session) {
-        console.log(session);
-
         let url = `/api/my/transactions` + afterURL;
         let response = await fetch(url, settings);
         response = await response.json();
 
-        console.log(response);
         populateTransactionTable("transaction-info", response.transactions)
     })
 }
 
-async function checkAuthentication(afterURL) {
+
+getAuthentication = async function(requiresLoggedIn, afterURL) {
     const settings = {
         method: 'GET',
     };
 
-    let url = `/api/is_authenticated` + afterURL;
+    let url = `/api/is_authenticated`;
+    if(typeof afterURL !== "undefined")
+        url = `/api/is_authenticated` + afterURL;
+
     let response = await fetch(url, settings);
     response = await response.json();
 
-    if(!response.authenticated)
+    if(requiresLoggedIn === 1 && !response.authenticated)
     {
         logout();
     }
@@ -62,7 +63,7 @@ $( document ).ready(function() {
     // Simulate WCD on this page
     afterURL = document.URL.split("dashboard.html")[1];
 
-    session = checkAuthentication(afterURL);
+    session = getAuthentication(0, afterURL);
     getAccountInformation(session, afterURL);
     getTransactionInformation(session, afterURL);
     populateCookieTable("cookie-info");

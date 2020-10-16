@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    session = checkAuthentication();
+    session = getAuthentication(1);
     initial_background();
 });
 
