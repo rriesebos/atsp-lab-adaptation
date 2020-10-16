@@ -13,7 +13,7 @@ function signin() {
                 const date = new Date();
                 date.setTime(`${date.getTime()}${30 * 24 * 60 * 60 * 1000}`);
                 document.cookie = `token=${body['token']}; expiryDate=${date.toUTCString()}; path=/`;
-                checkAuthenticationIndex();
+                getAuthentication(1);
             } else {
                 throw new Error(body['error']);
             }

@@ -22,10 +22,8 @@ async function getAuthentication(requiresLoggedIn) {
 
     if(requiresLoggedIn === 1 && !response.authenticated)
     {
-        alert("two");
         logout();
     } else if(requiresLoggedIn === 0 && response.authenticated) {
-        alert("three");
         window.location.href = "homepage.html";
     }
     return response;

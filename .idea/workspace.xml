@@ -26,10 +26,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b8d704ae-69c0-40ea-aec6-3cd30af82bb5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/csrf.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/csrf.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/session_hijacking.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/session_hijacking.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/user-portal/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdn/2-cdn-urlfilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/cdn/2-cdn-urlfilter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cdn/3-cdn-headerfilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/cdn/3-cdn-headerfilter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/user-portal/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/user-portal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/user-portal/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +117,8 @@
       <workItem from="1602678664824" duration="615000" />
       <workItem from="1602778635318" duration="2055000" />
       <workItem from="1602834793143" duration="8167000" />
-      <workItem from="1602849295503" duration="378000" />
+      <workItem from="1602849295503" duration="986000" />
+      <workItem from="1602872492667" duration="200000" />
     </task>
     <servers />
   </component>
@@ -141,12 +142,12 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602057481733" />
-    <state x="666" y="159" width="587" height="801" key="find.popup" timestamp="1602849670587">
+    <state x="666" y="159" width="587" height="801" key="find.popup" timestamp="1602872558223">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="666" y="119" width="587" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602234357398" />
     <state x="2586" y="119" width="587" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602255972132" />
-    <state x="666" y="159" width="587" height="801" key="find.popup/0.40.1920.1040/1920.40.1920.1040@0.40.1920.1040" timestamp="1602849670587" />
+    <state x="666" y="159" width="587" height="801" key="find.popup/0.40.1920.1040/1920.40.1920.1040@0.40.1920.1040" timestamp="1602872558223" />
     <state x="2586" y="159" width="587" height="801" key="find.popup/0.40.1920.1040/1920.40.1920.1040@1920.40.1920.1040" timestamp="1602840287536" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1602233260760">
       <screen x="0" y="0" width="1920" height="1040" />
