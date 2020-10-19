@@ -58,6 +58,11 @@
     <h1>Web Cache Poisoning</h1>
     <div class="jumbotron">
         <hr />
+        <h4>Note</h4>
+        <p>
+            Please finish the exercises for <a href="../pages/web_cache_deception.html">Web Cache Deception</a> successfully before starting with this lab.
+        </p>
+        <hr />
         <h3>What</h3>
         <p>
             As can be seen with other vulnerabilities on this site, caching is both a blessing and a curse. Incorrect usage and caching-configurations can introduce several vulnerabilities into a system. One of those is Web Cache
@@ -92,6 +97,7 @@ Cookie: ASP.NET_Session=23131;
             <var>en</var> (English), this response is cached. A subsequent request with a selected language of <var>nl</var> (Dutch) will also receive the English version. This is because the <var>selected-language</var> header is
             not taken into account when determining the cache-key, and thus the system considers the two requests above as equivalent. Therefore it returns the cached response.
         </p>
+
         <p>
             The <i>Web Cache Poisoning</i> attack is based on these key-headers. It specifically relies on the <i>unkeyed input headers</i>. <i>Unkeyed</i> means that this header is not used in the cache-key.
             As a result of this, two responses with different values of this unkeyed input header are considered identical by the cache system, and therefor are given the same cached response. In extreme cases, this could mean that the response
@@ -100,6 +106,21 @@ Cookie: ASP.NET_Session=23131;
             Input means that this header is used as an input for some sort of
             logic in the response. This input can be given by a form on a web-page, as in our example. Other ways to set this input-header are with a custom made HTTP request in a console, or special software which allows to user to
             create custom headers. This input could be a query, a special cookie value, or some other sort of value which is used in the response. This also gives the attacker potential options to input malicious requests, such as XSS code, phishing URLs or hurtful pieces of text.
+        </p>
+        <p>
+            If the Web Cache Poisoning attack is successfully performed, the attack has managed to <i>poison</i> the cache. In practice this means that the attack was able to let the response to his maliciously crafted request be saved inside the cache-system,
+            ready to be returned to subsequent users. A visual representation of a <i>poisoned cache</i> can be seen below in Figure 1:
+        </p>
+        <div class="image-container">
+            <figure>
+                <img src="../images/cache-poison.png" alt="Basic idea of a Web Cache Poisoning attack" width="100%">
+                <figcaption>Figure 1: Basic idea of a Web Cache Poisoning attack</figcaption>
+            </figure>
+        </div>
+        <p>
+            Although Web Cache Poisoning seems comparable to Web Cache Deception, the are a few differences. Firstly: both attacks are reliant on different mechanisms of the cache. WCD exploits wrong cache-configurations with relation to file-extentions in the reuqest, whereas
+        Web Cache Poisoning relies on (incorrect) key-input headers. The goal of both attacks is also quite different. WCD allows the attacker to <i>steal</i> data from <i>one individual</i> user. Web Cache Poisoning allows the attacker to <i>adjust</i> the requested
+        page for <i>all subsequent users</i>, where the specific adjustment can range from an XSS attack, to just showing a malicious URL.
         </p>
         <h3>Consequences</h3>
         <hr />
@@ -116,30 +137,33 @@ Cookie: ASP.NET_Session=23131;
         <p>
             We will first provide some context for our practical use-case. The product-owners of Insecure Banking felt it was time to attract a more youthful audience. They finally settled on implementing a new easter-egg on the new
             homepage. This easter-egg will change your background-color dependent on the HTTP header
-            <var>background-color</var> you give it. Go ahead, <a href="http://localhost:3001/homepage.html">give it a try!</a>
+            <var>background-color</var> you give it. This homepage can be accessed by logging into the <a href="http://localhost:3001/">user portal</a>. First try to login and go to the newly created homepage!
         </p>
         <p>
-            Several buttons are already implemented to give you a different background color. Also note the piece of text describing your background color, it can tell us quite a bit! Try selecting the different buttons, and see
-            what happens. In the text-input, we can provide the <var>background-color</var> header with our own input. Try some colors, like <span style="color: navy;"><b>navy</b></span>,
-            <span style="color: green;"><b>green</b></span>, <span style="color: pink;"><b>pink</b></span> and <span style="color: black;"><b>black</b></span>. In all their excitement, they rushed the release. This resulted in some
-            potential issues with caching, which is something we can abuse.
+            If you have reached the new homepage, you can see that there are several buttons already implemented to give you a different background color. Also note the piece of text describing your background color, we might need it for later! Try selecting the different buttons, and see
+            what happens. You probably won't see the background change. This is because of an issue with the cache! In all their excitement, they rushed the release. This resulted in some issues with caching, which is something we can abuse.
+        </p>
+            <p>
+            To test out the other background-colors, we first need to clear the cache before we request a new color. To do this, press the "Reset" button in the top-right corner of the homepage.
+
+            Pressing the <i>Blue background!</i> button gives us a blue background, and pressing the <i>Red background!</i> button gives us a red background. In the text-input, we can provide the <var>background-color</var> header with our own input. Try some colors, like <span style="color: navy;"><b>navy</b></span>,
+            <span style="color: green;"><b>green</b></span>, <span style="color: pink;"><b>pink</b></span> and <span style="color: black;"><b>black</b></span>.
         </p>
         <p>
-            But to start this, the CDN has to be activated! Go to the project root folder and then to <var>./cdn/1-cdn-enabler.js</var>. This is the control switch to turn caching on or off. Try turning caching on, and saving the
-            file. The CDN will automatically detect the change and restart. When this is done, we can look and marvel at the beauty of our <a href="http://localhost:3001/homepage.html">new homepage</a>.
+            Perform several experiments, and try to get a good grasp of how the <var>background-color</var> is handled! This knowledge is needed to perform a successful Web Cache Poisoning attack.
         </p>
         <hr />
     </div>
     <div class="jumbotron">
         <h3>Part 2: Detecting the unkeyed headers</h3>
         <p>
-            Hmm, it seems that the <var>background-color</var> header is an <i>unkeyed input</i>! Notice how the first request send with an empty cache is cached, after which this request is returned to all other users (even when
+            Hmm, it seems that the <var>background-color</var> header is an <i>unkeyed input</i>! In Part 1 you already noticed how the first request send with an empty cache is cached, after which this request is returned to all other users (even when
             requesting a different background-color)!
         </p>
         <p>
-            To confirm this, first press the reset button in the top right corner in order to clear the cache of our CDN. After this, press one of the buttons on the page to request a new background-color, for example red. Notice how
-            you cannot seem to get another background color after this (as long as you don't clear the cache). Try this by pressing the other buttons, or opening a new (incognito) window and navigating to
-            <a href="http://localhost:3001/homepage.html">http://localhost:3001/homepage.html</a>.
+            To fully confirm this, first press the reset button in the top right corner in order to clear the cache of our CDN. After this, press one of the buttons on the page to request a new background-color, for example red. Notice how
+            you cannot seem to get another background color after this (as long as you don't clear the cache). Also try to open the page logged-in as a different user. This can be done by pressing the <i>Log Out</i> button in the upper right corner, and
+            then logging in with a different account. Is the background response still cached, and thus the background-color still the same?
         </p>
         <hr />
     </div>
@@ -182,11 +206,32 @@ Cookie: ASP.NET_Session=23131;
         <p>
             As discovered in Part 2, we see that the <var>background-color</var> header is an <i>unkeyed input</i>. This probably has to do with the way our cache-keys are generated. Your task is to make the
             <var>background-color</var> header a keyed input, by improving the cache-key generation function. This function can be found in the file <var>./cdn/4-cdn-key-generator.js</var>. Test your solution by repeating Steps 2
-            and 3. If your solution is succesful, you should be able to retrieve different background-colors, but indentical requests will be cached and served by the CDN. It is true that a user can still receive a malicious request, if the user
-            requests this malicious request specifically. To deal with this, the XSS vulnerability has to be fixed, but this is outside the scope of this exercise.
+            and 3. If your solution is successful, you should be able to retrieve different background-colors, but identical requests will be cached and served by the CDN. It is true that a user can still receive a malicious request, if the user
+            requests this malicious request specifically. To deal with this, the XSS vulnerability has to be fixed, but this is outside the scope of this exercise. If you have any trouble, you can click on <i>Spoiler 1</i> to get a hint, and <i>Spoiler 2</i>
+            to get the answer for this exercise.
         </p>
         <p>
             Just like Web Cache Deception, this vulnerability is also heavily dependent on a correct configuration of your Cache system. So always make sure your configuration is correct, and specific to your needs!
+        </p>
+        <p>
+            <span onclick="spoiler3()"><b>Spoiler 1, click here to show a hint:</b></span>
+            <br />
+            <span id="answer3"></span>
+        </p>
+        <p>
+            <span onclick="spoiler4()"><b>Spoiler 2, click here to see the answer:</b></span>
+            <br />
+        <div id="answer4" style="display: none;">
+<pre class="prettyprint">
+getCacheKey: function(url, requestHeaders) {
+    key = url;
+    if (requestHeaders.hasOwnProperty('background-color')) {
+        key = key + requestHeaders['background-color'];
+    }
+    return key;
+}
+</pre>
+        </div>
         </p>
         <hr />
     </div>
