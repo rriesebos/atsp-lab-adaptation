@@ -95,12 +95,13 @@ Cookie: ASP.NET_Session=23131;
             In the example above, the <span style="color: red;">red</span> portions are key-headers, and are evaluated to determine the cache response. The <span style="color: blue;">blue</span> header is a so called
             <i>unkeyed input header</i>. These are not considered when determining if a cached response can be returned. In this case it can have unintended consequences. If a person first requests the page with a language of
             <var>en</var> (English), this response is cached. A subsequent request with a selected language of <var>nl</var> (Dutch) will also receive the English version. This is because the <var>selected-language</var> header is
-            not taken into account when determining the cache-key, and thus the system considers the two requests above as equivalent. Therefore it returns the cached response.
+            not taken into account when determining the cache-key, and thus the system considers the two requests above as equivalent. 
+            e it returns the cached response.
         </p>
 
         <p>
             The <i>Web Cache Poisoning</i> attack is based on these key-headers. It specifically relies on the <i>unkeyed input headers</i>. <i>Unkeyed</i> means that this header is not used in the cache-key.
-            As a result of this, two responses with different values of this unkeyed input header are considered identical by the cache system, and therefor are given the same cached response. In extreme cases, this could mean that the response
+            As a result of this, two responses with different values of this unkeyed input header are considered identical by the cache system, and therefore are given the same cached response. In extreme cases, this could mean that the response
             be significantly different from what you requested, dependent on the impact the unkeyed header has on the returned data.
 
             Input means that this header is used as an input for some sort of
