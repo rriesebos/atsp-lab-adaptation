@@ -13,7 +13,7 @@ function signin() {
                 const date = new Date();
                 date.setTime(`${date.getTime()}${30 * 24 * 60 * 60 * 1000}`);
                 document.cookie = `token=${body['token']}; expiryDate=${date.toUTCString()}; path=/`;
-                checkAuthentication();
+                getAuthentication(0);
             } else {
                 throw new Error(body['error']);
             }
@@ -25,21 +25,6 @@ function signin() {
         });
 }
 
-async function checkAuthentication() {
-    const settings = {
-        method: 'GET',
-    };
-
-    let url = `/api/is_authenticated`
-    let response = await fetch(url, settings);
-    response = await response.json();
-
-    if(response.authenticated)
-    {
-        window.location.href = "dashboard.html";
-    }
-}
-
 $( document ).ready(function() {
-    checkAuthentication();
+    getAuthentication(0);
 });

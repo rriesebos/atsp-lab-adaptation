@@ -4,6 +4,7 @@ var crypto = require('crypto');
 var cdnEnabler = require('./1-cdn-enabler');
 var urlFilter = require('./2-cdn-urlfilter');
 var headerFilter = require('./3-cdn-headerfilter');
+var keyGenerator = require('./4-cdn-key-generator');
 
 const app = express();
 const port = 3001;
@@ -36,7 +37,7 @@ app.all('/*', function(request, response) {
 
     const options = getOptions(request);
 
-    if(sendCachedResponse(request, response)) {
+    if(sendCachedResponse(request, options, response)) {
         console.log("URL served from CDN Cache: " + request.url);
         return;
     }
@@ -76,6 +77,9 @@ function getOptions(request) {
         requestHeaders['accept-language'] = request.headers["accept-language"];
     if(request.headers.hasOwnProperty("cookie"))
         requestHeaders['cookie'] = request.headers["cookie"];
+    if(request.headers.hasOwnProperty("background-color")) {
+        requestHeaders['background-color'] = request.headers["background-color"];;
+    }
 
     return {
         // host to forward to
@@ -122,7 +126,7 @@ function forwardRequest(request, options, response) {
                 // Cache the request if required
                 if(shouldRequestBeCached(request, proxiedResponse)) {
                     // Cache the request
-                    cacheRequest(request.url, proxiedResponse.headers, output);
+                    cacheRequest(request.url, proxiedResponse.headers, options.headers, output);
                 }
 
             });
@@ -150,24 +154,32 @@ function forwardRequest(request, options, response) {
     return serverRequest;
 }
 
-function cacheRequest(url, headers, body) {
-    console.log("Response is being cached: " + url);
-    cache[url] = {
+function cacheRequest(url, headers, requestHeaders,body) {
+    cachekey = keyGenerator.getCacheKey(url, requestHeaders);
+    if (requestHeaders.hasOwnProperty('background-color')) {
+        //key = key+requestHeaders['background-color'];
+    }
+    console.log("Response is being cached: " + cachekey);
+    cache[cachekey] = {
         createdTimestamp: Date.now(),
         headers: headers,
         body: body
     };
 }
 
-function sendCachedResponse(request, response) {
-    if(!cache.hasOwnProperty(request.url))
+function sendCachedResponse(request, options, response) {
+    cachekey = keyGenerator.getCacheKey(request.url, options.headers);
+    if (options.headers.hasOwnProperty('background-color')) {
+        //key = key+requestHeaders['background-color'];
+    }
+    if(!cache.hasOwnProperty(cachekey))
         return false;
-    cachedObj = cache[request.url];
+    cachedObj = cache[cachekey];
 
     // Check if cache still valid
     if(Date.now() - cachedObj.createdTimestamp > cacheValidTime * 1000) {
         // Cache is present, but expired!
-        delete cache[request.url];
+        delete cache[cachekey];
         return false;
     }
 

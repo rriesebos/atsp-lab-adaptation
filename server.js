@@ -264,7 +264,15 @@ app.get('/api/transactions/from/:from/to/:to', async (req, res) => {
   }
 })
 
-
+app.get('/api/background.html', async (req, res) => {
+    if (req.headers.hasOwnProperty("background-color")){
+        result = req.headers["background-color"];
+        console.log(result);
+        res.send(result);
+    } else {
+        res.send("grey");
+    }
+})
 
 app.use(morgan('short'));
 app.use(express.json());

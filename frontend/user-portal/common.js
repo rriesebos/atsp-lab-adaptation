@@ -7,21 +7,31 @@ const fetchSettings = {
     }
 }
 
-function logout() {
-    document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
-    window.location.href = "index.html";
-}
-
-async function isLoggedIn() {
+// requiresLoggedIn:
+// 0 = MUST NOT be logged in
+// 1 = MUST be logged in
+// 2 = Does not matter if logged in or not
+async function getAuthentication(requiresLoggedIn) {
     const settings = {
         method: 'GET',
     };
 
-    let url = `/api/is_authenticated`
+    let url = `/api/is_authenticated`;
     let response = await fetch(url, settings);
     response = await response.json();
 
-    return response.authenticated;
+    if(requiresLoggedIn === 1 && !response.authenticated)
+    {
+        logout();
+    } else if(requiresLoggedIn === 0 && response.authenticated) {
+        window.location.href = "homepage.html";
+    }
+    return response;
+}
+
+function logout() {
+    document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
+    window.location.href = "index.html";
 }
 
 function getMenuItem(pageName, pageUrl) {
@@ -84,7 +94,7 @@ function createMenuButtons(isLoggedIn) {
     menuRight.appendChild(button);
 
     // Add logout button
-    if(isLoggedIn) {
+    if(isLoggedIn.authenticated) {
         button = document.createElement("button");
         button.className = "btn btn-danger ml-2";
         button.setAttribute("onclick", "logout();");
@@ -94,13 +104,14 @@ function createMenuButtons(isLoggedIn) {
 }
 
 function createMenu() {
-    isLoggedIn().then(function(isLoggedIn) {
+    getAuthentication(2).then(function(isLoggedIn) {
         menuLeft = document.getElementById("menuitems");
 
         // Create regular pages below
-        if(!isLoggedIn) {
+        if(!isLoggedIn.authenticated) {
             menuLeft.appendChild(getMenuItem("Login", "./index.html"));
         } else {
+            menuLeft.appendChild(getMenuItem("Homepage", "./homepage.html"));
             menuLeft.appendChild(getMenuItem("Dashboard", "./dashboard.html"));
         }
 

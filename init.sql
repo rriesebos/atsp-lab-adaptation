@@ -20,18 +20,18 @@ CREATE TABLE IF NOT EXISTS transactions (
 INSERT INTO users 
     (surname, name, password, is_admin, balance)
 VALUES
-    ('Edser', 'Apperloo', 'Mantsje', FALSE, 1000),
-    ('Mark', 'Timmerman', 'Spazzy', FALSE, 1001),
-    ('Sjors', 'Mallon', 'sjmdev', FALSE, 10000000),
-    ('Niels', 'Meima', 'nielsmeima', FALSE, 1234),
-    ('Fatih', 'Turkmen', 'very_secure_password', TRUE, 100000);
+    ('Alice', 'Adams', 'Mantsje', FALSE, 1000),
+    ('Bob', 'Baker', 'Spazzy', FALSE, 1001),
+    ('Carol', 'Campbell', 'ccdev', FALSE, 10000000),
+    ('Dan', 'Davis', 'dandavis', FALSE, 1234),
+    ('Eric', 'Evans', 'very_secure_password', TRUE, 100000);
 
 
 INSERT INTO transactions
     (from_user_id, to_user_id, amount, reference)
 VALUES
-    (1, 2, 1, 'Thanks Mark!'),
-    (2, 3, 1, 'Thanks Sjors!'),
-    (3, 4, 1, 'Thanks Niels!'),
-    (4, 5, 1, 'Thanks Fatih!'),
-    (5, 1, 1, 'Thanks Edser!');
+    (1, 2, 1, 'Thanks Bob!'),
+    (2, 3, 1, 'Thanks Carol!'),
+    (3, 4, 1, 'Thanks Dan!'),
+    (4, 5, 1, 'Thanks Eric!'),
+    (5, 1, 1, 'Thanks Alice!');

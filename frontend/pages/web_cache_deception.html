@@ -26,20 +26,26 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="../pages/sql_injection.html">SQL Injection</a>
+          <a class="nav-link" href="../pages/sql_injection.html">SQL Injection <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Cross-Site Vulnerabilities
+            <span class="caret"></span></a>
+          <div class="dropdown-menu">
+            <a href="../pages/xss.html" class="dropdown-item">1. Cross-Site Scripting</a>
+            <a href="../pages/csrf.html" class="dropdown-item">2. Cross-Site Request Forgery</a>
+          </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../pages/xss.html">Cross-Site Scripting</a>
+          <a class="nav-link" href="../pages/insecure_direct_object_references.html">Insecure Direct Object References</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../pages/csrf.html">Cross-Site Request Forgery</a>
-        </li>
-          <li class="nav-item">
-          <a class="nav-link" href="../pages/insecure_direct_object_references.html">Insecure Direct Object References</a>  
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="../pages/web_cache_deception.html">Web Cache Deception<span
-                  class="sr-only">(current)</span></a>
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Cache Vulnerabilities
+            <span class="caret"></span></a>
+          <div class="dropdown-menu">
+            <a href="../pages/web_cache_deception.html" class="dropdown-item">1. Web Cache Deception</a>
+            <a href="../pages/web_cache_poisoning.html" class="dropdown-item">2. Web Cache Poisoning</a>
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="../pages/session_hijacking.html">Session Hijacking</a>
@@ -133,6 +139,20 @@
         Try turning caching on, and saving the file. The CDN will automatically detect the change and restart. Check if the
         user portal through the <a href="http://localhost:3001/">CDN</a> still functions correctly, or not!
       </p>
+      <p>
+        <span onclick="spoiler1()"><b>Spoiler 1, click here to show a hint:</b></span>
+        <br />
+        <span id="answer1"></span>
+      </p>
+      <p>
+        <span onclick="spoiler2()"><b>Spoiler 2, click here to show the solution:</b></span>
+        <br />
+        <div id="answer2" style="display: none;">
+<pre class="prettyprint">
+return true;
+</pre>
+        </div>
+      </p>
     </div>
     <div class="jumbotron">
       <h3>Part 2: Configuring Cache Rules</h3>
@@ -147,12 +167,26 @@
         To solve this, open the file ./cdn/2-cdn-urlfilter.js, and try to configure the CDN such that it only caches static files.
         After saving the file, the CDN should automatically reconfigure itself. Check out if you can now log in without issues.
       </p>
+      <p>
+        <span onclick="spoiler3()"><b>Spoiler 1, click here to show a hint:</b></span>
+        <br />
+        <span id="answer3"></span>
+      </p>
+      <p>
+        <span onclick="spoiler4()"><b>Spoiler 2, click here to show the solution:</b></span>
+        <br />
+      <div id="answer4" style="display: none;">
+<pre class="prettyprint">
+const whitelist = [".css", ".js", ".jpg", ".png", ".html"];
+</pre>
+      </div>
+      </p>
     </div>
     <div class="jumbotron">
       <h3>Part 3: Web Cache Deception</h3>
       <hr>
       <p>
-        A little bird told Insecure Banking that the dashboard page is vulnerable to Web Cache Deception. It is up to you
+        A little bird told Insecure Banking that the <strong>dashboard</strong> page is vulnerable to Web Cache Deception. It is up to you
         to confirm if this is indeed the case. You can use the following instructions.
       </p>
       <p>The first step of Web Cache Deception is to craft a URL that the CDN thinks it is a static file,
@@ -169,6 +203,16 @@
       such as PHP/PERL/Python-based websites. On websites with dynamic content, you can still perform WCD, but you would then
         cache API responses, that the victim must open one way or another. However, for demonstration purposes, we added
       all characters after the dashboard.html to all API requests as well on that page.</p>
+      <p>
+        <span onclick="spoiler5()"><b>Spoiler 1, click here for a hint.</b></span>
+        <br />
+        <span id="answer5"></span>
+      </p>
+      <p>
+        <span onclick="spoiler6()"><b>Spoiler 2, click here to show the solution:</b></span>
+        <br />
+        <span id="answer6"></span>
+      </p>
     </div>
     <div class="jumbotron">
       <h3>Part 4: Prevention of WCD</h3>
@@ -192,6 +236,22 @@
         Again, save the file and the CDN is automatically reconfigured. After your changes, challenge yourself to see if you
         can still perform Web Cache Deception or not.
       </p>
+      <p>
+        <span onclick="spoiler7()"><b>Spoiler 1, click here for a hint.</b></span>
+        <br />
+        <span id="answer7"></span>
+      </p>
+      <p>
+        <span onclick="spoiler8()"><b>Spoiler 2, click here to show the solution:</b></span>
+        <br />
+      <div id="answer8" style="display: none;">
+<pre class="prettyprint">
+const headerWhitelist = {
+  "content-type": ["text/css", "application/javascript", "image/jpeg", "image/png", "text/html"]
+};
+</pre>
+      </div>
+      </p>
     </div>
   </main>
 
@@ -206,6 +266,7 @@
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="../user-portal/reset.js"></script>
+  <script src="web_cache_deception.js"></script>
 </body>
 
 </html>

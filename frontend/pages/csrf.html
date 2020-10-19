@@ -22,19 +22,26 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="../pages/sql_injection.html">SQL Injection</a>
+              <a class="nav-link" href="../pages/sql_injection.html">SQL Injection <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../pages/xss.html">Cross-Site Scripting</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="../pages/csrf.html">Cross-Site Request Forgery<span class="sr-only">(current)</span></a>
+            <li class="nav-item dropdown active">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Cross-Site Vulnerabilities
+                <span class="caret"></span></a>
+              <div class="dropdown-menu">
+                <a href="../pages/xss.html" class="dropdown-item">1. Cross-Site Scripting</a>
+                <a href="../pages/csrf.html" class="dropdown-item">2. Cross-Site Request Forgery</a>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../pages/insecure_direct_object_references.html">Insecure Direct Object References</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../pages/web_cache_deception.html">Web Cache Deception</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Cache Vulnerabilities
+                <span class="caret"></span></a>
+              <div class="dropdown-menu">
+                <a href="../pages/web_cache_deception.html" class="dropdown-item">1. Web Cache Deception</a>
+                <a href="../pages/web_cache_poisoning.html" class="dropdown-item">2. Web Cache Poisoning</a>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../pages/session_hijacking.html">Session Hijacking</a>
@@ -137,22 +144,22 @@
                           <tbody>
                             <tr>
                               <td>1</td>
-                              <td>Edser</td>
+                              <td>Alice</td>
                               <td>Mantsje</td>
                             </tr>
                               <td>2</td>
-                              <td>Mark</td>
+                              <td>Bob</td>
                               <td>Spazzy</td>
                             </tr>
                             </tr>
                               <td>3</td>
-                              <td>Sjors</td>
-                              <td>sjmdev</td>
+                              <td>Carol</td>
+                              <td>ccdev</td>
                             </tr>
                             </tr>
                               <td>4</td>
-                              <td>Niels</td>
-                              <td>nielsmeima</td>
+                              <td>Dan</td>
+                              <td>dandavis</td>
                             </tr>
                           </tbody>
                         </table>
