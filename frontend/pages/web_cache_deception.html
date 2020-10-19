@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="../user-portal/common.css">
+  <link rel="stylesheet" href="common.css">
 
   <title>Web-Vulnerability Platform</title>
 </head>
@@ -88,6 +89,13 @@
         The attacker will modify the URL to the following: <i>somebank.com/profile/img.png</i> and notices it shows the initial
         profile webpage. While opening an incognito browser, the user sees the <b>exact</b> same webpage <u>without being logged in!</u>
       </p>
+      <div class="image-container">
+        <figure>
+          <img src="../images/WCD.svg"
+               alt="Session hijacking using traffic monitoring">
+          <figcaption>Figure 1: Web Cache Deception Flow</figcaption>
+        </figure>
+      </div>
       <p>
         Hence, the attacker sends a slightly different URL (to bypass cache) to the victim. The victim opens the URL, but
         sees a regular webpage. The user has no reason for suspicion, because there is nothing odd about the webpage
@@ -96,6 +104,7 @@
       <p>
         The attacker checks back on the same URL that the attacker sent to the victim, to see if it has been opened, and thus,
         has been cached. If so, the attacker now sees the same HTML-content as the victim when the victim is logged in!
+        This flow has been illustrated in <i>Figure 1</i>.
       </p>
       <h3>Consequences</h3>
       <hr>
