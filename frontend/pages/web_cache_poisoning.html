@@ -108,8 +108,8 @@ Cookie: ASP.NET_Session=23131;
             create custom headers. This input could be a query, a special cookie value, or some other sort of value which is used in the response. This also gives the attacker potential options to input malicious requests, such as XSS code, phishing URLs or hurtful pieces of text.
         </p>
         <p>
-            If the Web Cache Poisoning attack is successfully performed, the attack has managed to <i>poison</i> the cache. In practice this means that the attacker was able to let the response to his maliciously crafted request be saved inside the cache-system,
-            ready to be returned to subsequent users. A visual representation of a <i>poisoned cache</i> can be seen below in Figure 1:
+            If the Web Cache Poisoning attack is successfully performed, the attack has managed to <i>poison</i> the cache. In practice this means that the attacker was able to save his maliciously crafted response inside the cache-system.
+            This response will be returned to all subsequent users. A visual representation of a <i>poisoned cache</i> can be seen below in Figure 1:
         </p>
         <div class="image-container">
             <figure>
@@ -118,7 +118,7 @@ Cookie: ASP.NET_Session=23131;
             </figure>
         </div>
         <p>
-            Although Web Cache Poisoning seems comparable to Web Cache Deception, the are a few differences. Firstly: both attacks are reliant on different mechanisms of the cache. WCD exploits wrong cache-configurations with relation to file-extentions in the request, whereas
+            Although Web Cache Poisoning seems comparable to Web Cache Deception, there are a few differences. Firstly: both attacks are reliant on different mechanisms of the cache. WCD exploits wrong cache-configurations with relation to file-extensions in the request, whereas
         Web Cache Poisoning relies on (incorrect) key-input headers. The goal of both attacks is also quite different. WCD allows the attacker to <i>steal</i> data from <i>one individual</i> user. Web Cache Poisoning allows the attacker to <i>adjust</i> the requested
         page for <i>all subsequent users</i>, where the specific adjustment can range from an XSS attack, to just showing a malicious URL.
         </p>
